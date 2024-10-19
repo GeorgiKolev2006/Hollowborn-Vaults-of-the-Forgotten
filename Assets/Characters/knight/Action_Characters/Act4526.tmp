@@ -1,0 +1,105 @@
+@tool
+extends CharacterBody2D
+
+
+var generate_action_sprite = true
+var generate_move_modes = true
+var generate_collider = true
+
+@export_group("Essentials")
+var move_mode_scene = preload("res://addons/Action_Characters/Essential_Scenes/Movement_Modes.tscn")
+var jump_mode_scene = preload("res://addons/Action_Characters/Essential_Scenes/Jump_Modes.tscn")
+var action_sprite_scene = preload("res://addons/Action_Characters/Essential_Scenes/Action_Sprite.tscn")
+@export var action_sprite_essentials = preload("res://addons/Action_Characters/For_User/AS_Essentials_Template.tscn"):
+	set(val):
+		action_sprite_essentials = val
+		generate_action_sprite = true
+		_setup()
+
+@export_group("Basic Settings")
+@export_enum("Right", "Left") var starting_direction = 0:
+	set(val):
+		starting_direction = val
+		if val == 0:
+			get_node("Action_Sprite")._update_animation("Right", "Direction")
+		if val == 1:
+			get_node("Action_Sprite")._update_animation("Left", "Direction")
+
+@export_enum("Instant", "Momentum") var movement_mode : int ## This dictates how your character will move around
+@export var is_playable = false
+
+@export_group("Movement Options") 
+@export var gravity = 200.0 ## This is how fast your character will fall
+@export var gravity_fall_boost = 100.0 ## This is how much faster your character will fall if they're falling
+
+@export var move_speed = 100.0
+
+@export_subgroup("Momentum Mode Exclusives")
+@export var move_speed_max = 500
+@export var deceleration_factor = 0.95 ## This is how fast your character will decelerate 
+@export var quick_turn_factor = 0.98 ## This is how fast your character will be able to switch directions
+
+func _ready():
+	if Engine.is_editor_hint(): 
+		set_physics_process(false)
+		_setup()
+	
+	if not Engine.is_editor_hint():
+		print("Play")
+		set_physics_process(true)
+
+func _setup():
+	if not Engine.is_editor_hint(): return
+	
+	if get_child_count() != 0:
+		for child in get_children():
+			if child.name == "Action_Sprite":
+				if generate_action_sprite:
+					child.queue_free()
+			if child.name in ["Movement_Modes", "Jump_Modes"]:
+				if generate_move_modes:
+					child.queue_free()
+			if child.name == "Collider":
+				if generate_collider:
+					child.queue_free()
+			await get_tree().create_timer(0.2).timeout
+	
+	if generate_action_sprite:
+		var action_sprite = action_sprite_scene.instantiate()
+		add_child(action_sprite)
+		action_sprite.set_owner(get_tree().get_edited_scene_root())
+		action_sprite.name = "Action_Sprite"
+		action_sprite.action_sprite_essentials = action_sprite_essentials
+		action_sprite._setup()
+		generate_action_sprite = false
+	
+	if generate_move_modes:
+		var move_mode = move_mode_scene.instantiate() 
+		add_child(move_mode)
+		move_mode.set_owner(get_tree().get_edited_scene_root())
+		move_mode.name = "Movement_Modes"
+		
+		var jump_mode = jump_mode_scene.instantiate()
+		add_child(jump_mode)
+		jump_mode.set_owner(get_tree().get_edited_scene_root())
+		jump_mode.name = "Jump_Modes"
+		
+		generate_move_modes = false
+	
+	if generate_collider:
+		var collider = CollisionShape2D.new()
+		add_child(collider)
+		collider.set_owner(get_tree().get_edited_scene_root())
+		collider.name = "Collider"
+		
+		var collision_shape= RectangleShape2D.new()
+		collision_shape.size = Vector2(1, 1)
+		
+		collider.shape = collision_shape
+		
+		generate_collider = false
+
+func _move(delta):
+	$Movement_Modes.get_child(movement_mode)._execute_movement(delta) #This will run movement through the correct system
+	move_and_slide() #Moves the character
+

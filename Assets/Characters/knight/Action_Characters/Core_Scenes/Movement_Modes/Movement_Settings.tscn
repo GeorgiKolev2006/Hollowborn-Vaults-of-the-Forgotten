@@ -1,0 +1,14 @@
+[gd_scene load_steps=4 format=3 uid="uid://cumdeduu2gugy"]
+
+[ext_resource type="Script" path="res://addons/Action_Characters/Core_Scenes/Movement_Modes/Movement_Modes.gd" id="1_teuro"]
+[ext_resource type="Script" path="res://addons/Action_Characters/Core_Scenes/Movement_Modes/Movement_Scripts/Instant_Movement_Mode.gd" id="2_i4xuv"]
+[ext_resource type="Script" path="res://addons/Action_Characters/Core_Scenes/Movement_Modes/Movement_Scripts/Momentum_Movement_Mode.gd" id="3_ij5y6"]
+
+[node name="Movement_Modes" type="Node"]
+script = ExtResource("1_teuro")
+
+[node name="Instant" type="Node" parent="."]
+script = ExtResource("2_i4xuv")
+
+[node name="Momentum" type="Node" parent="."]
+script = ExtResource("3_ij5y6")

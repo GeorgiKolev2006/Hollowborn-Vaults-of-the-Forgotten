@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=3 uid="uid://cjcjbnp86muaw"]
+
+[ext_resource type="Script" path="res://addons/Action_Characters/Action_Character.gd" id="1_3kds5"]
+[ext_resource type="PackedScene" uid="uid://ccq1vqbph3l1h" path="res://addons/Action_Characters/Custom_Files/AS_Essentials_Template.tscn" id="2_8ata3"]
+
+[sub_resource type="PackedScene" id="PackedScene_0kccm"]
+
+[node name="ActionCharacter" type="CharacterBody2D"]
+script = ExtResource("1_3kds5")
+preserve_collider = null
+action_sprite_essentials = ExtResource("2_8ata3")
+state_machine = SubResource("PackedScene_0kccm")
+is_playable = null
+movement_mode = 1
+gravity = 1000.0
+gravity_fall_boost = 500.0
+move_speed = 1000.0
+move_speed_max = 2000.0
+deceleration_factor = 0.99

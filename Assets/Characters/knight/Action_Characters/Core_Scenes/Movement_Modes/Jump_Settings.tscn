@@ -1,0 +1,15 @@
+[gd_scene load_steps=4 format=3 uid="uid://cd4cxfbb8835"]
+
+[ext_resource type="Script" path="res://addons/Action_Characters/Core_Scenes/Movement_Modes/Jump_Modes.gd" id="1_icsfs"]
+[ext_resource type="Script" path="res://addons/Action_Characters/Core_Scenes/Movement_Modes/Jump_Scripts/Jump_Fixed_Mode.gd" id="2_qrl68"]
+[ext_resource type="Script" path="res://addons/Action_Characters/Core_Scenes/Movement_Modes/Jump_Scripts/Jump_Variable_Mode.gd" id="3_7exc1"]
+
+[node name="Jump_Settings" type="Node"]
+script = ExtResource("1_icsfs")
+jump_action = "Jump"
+
+[node name="Fixed" type="Node" parent="."]
+script = ExtResource("2_qrl68")
+
+[node name="Variable" type="Node" parent="."]
+script = ExtResource("3_7exc1")

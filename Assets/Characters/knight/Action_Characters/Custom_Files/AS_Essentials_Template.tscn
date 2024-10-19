@@ -1,0 +1,34 @@
+[gd_scene load_steps=5 format=3 uid="uid://ccq1vqbph3l1h"]
+
+[ext_resource type="Texture2D" uid="uid://cstdrq0opb2mr" path="res://Example/RebelPaw_Sprites.png" id="1_e5n7a"]
+
+[sub_resource type="Animation" id="Animation_26cfs"]
+resource_name = "Left"
+
+[sub_resource type="Animation" id="Animation_2ehhv"]
+resource_name = "Right"
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_kh8dc"]
+_data = {
+"Left": SubResource("Animation_26cfs"),
+"Right": SubResource("Animation_2ehhv")
+}
+
+[node name="ActionSprite_Essentials" type="Node2D"]
+
+[node name="BaseSprite" type="Sprite2D" parent="."]
+texture_filter = 1
+texture = ExtResource("1_e5n7a")
+hframes = 7
+vframes = 10
+
+[node name="Machines" type="Node" parent="."]
+
+[node name="Direction" type="AnimationPlayer" parent="Machines"]
+root_node = NodePath("../..")
+libraries = {
+"": SubResource("AnimationLibrary_kh8dc")
+}
+
+[node name="Base" type="AnimationPlayer" parent="Machines"]
+root_node = NodePath("../..")

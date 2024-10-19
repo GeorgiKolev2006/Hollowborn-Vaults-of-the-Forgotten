@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://evb85pw4ktdd"]
+
+[ext_resource type="Script" path="res://addons/Action_Characters/State_Machine.gd" id="1_koxcb"]
+
+[node name="State_Machine_Template" type="Node"]
+script = ExtResource("1_koxcb")
