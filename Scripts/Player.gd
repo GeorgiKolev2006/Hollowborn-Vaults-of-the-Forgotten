@@ -3,6 +3,10 @@ extends CharacterBody2D
 var input_movement = Vector2.ZERO
 var speed = 70
 
+func _ready():
+	$BasicSword/CollisionShape2D.disabled = true
+
+
 func _physics_process(delta):
 	move()
 
