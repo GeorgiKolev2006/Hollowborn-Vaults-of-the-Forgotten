@@ -1,7 +1,8 @@
-[gd_scene load_steps=56 format=3 uid="uid://dkmeoigp8f5b3"]
+[gd_scene load_steps=57 format=3 uid="uid://dkmeoigp8f5b3"]
 
 [ext_resource type="Script" path="res://Scripts/Player.gd" id="1_p6bv2"]
 [ext_resource type="Texture2D" uid="uid://bmwfjrc5x4w1d" path="res://Assets/Characters/MC/Player-rpg (1).png" id="2_5r80r"]
+[ext_resource type="PackedScene" uid="uid://ccqovmdrh30rw" path="res://Scenes/Interactables/crate.tscn" id="3_45t6w"]
 
 [sub_resource type="Animation" id="Animation_ygs44"]
 resource_name = "Dead"
@@ -632,8 +633,10 @@ transitions = ["Start", "Idle", SubResource("AnimationNodeStateMachineTransition
 graph_offset = Vector2(0, -35.9508)
 
 [node name="main_level" type="Node2D"]
+y_sort_enabled = true
 
 [node name="Player" type="CharacterBody2D" parent="."]
+y_sort_enabled = true
 script = ExtResource("1_p6bv2")
 
 [node name="Sprite2D" type="Sprite2D" parent="Player"]
@@ -651,6 +654,8 @@ position = Vector2(-0.5, 13)
 shape = SubResource("RectangleShape2D_a4kde")
 
 [node name="sword" type="Area2D" parent="Player"]
+collision_layer = 2
+collision_mask = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Player/sword"]
 shape = SubResource("RectangleShape2D_1p4wi")
@@ -666,3 +671,6 @@ parameters/Walk/blend_position = Vector2(0, 0)
 
 [node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2(3, 3)
+
+[node name="crate" parent="." instance=ExtResource("3_45t6w")]
+position = Vector2(77, 8)
