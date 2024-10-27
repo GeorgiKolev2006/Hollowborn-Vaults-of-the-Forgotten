@@ -3,6 +3,9 @@ extends CharacterBody2D
 @onready var anim_tree = $anim_tree
 @onready var anim_state = anim_tree.get("parameters/playback")
 
+enum player_states {MOVE, SWORD, JUMP, DEAD}
+var current_states = player_states.MOVE
+
 var input_movement = Vector2.ZERO
 var speed = 70
 
@@ -11,7 +14,11 @@ func _ready():
 
 
 func _physics_process(delta):
-	move()
+	match current_states:
+		player_states.MOVE:	
+			move()
+		player_states.SWORD:
+			sword()
 
 func move():
 	input_movement = Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")
@@ -28,4 +35,13 @@ func move():
 		anim_state.travel("Idle")
 		velocity = Vector2.ZERO
 		
+	if Input.is_action_just_pressed("sword"):
+		current_states = player_states.SWORD
+		
 	move_and_slide()
+
+func sword():
+	anim_state.travel("Sword")
+
+func on_states_reset():
+	current_states = player_states.MOVE
