@@ -19,9 +19,11 @@ func _physics_process(delta):
 			move()
 		player_states.SWORD:
 			sword()
+		player_states.JUMP:
+			jump()
 
 func move():
-	input_movement = Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")
+	input_movement = Input.get_vector("move_left", "move_right", "move_up", "move_down")
 	
 	if input_movement != Vector2.ZERO:
 		anim_tree.set("parameters/Idle/blend_position", input_movement)
@@ -37,7 +39,10 @@ func move():
 		
 	if Input.is_action_just_pressed("sword"):
 		current_states = player_states.SWORD
-		
+	
+	if Input.is_action_just_pressed("jump"):
+		current_states = player_states.JUMP
+	
 	move_and_slide()
 
 func sword():
@@ -45,3 +50,15 @@ func sword():
 
 func on_states_reset():
 	current_states = player_states.MOVE
+
+func jump():
+	anim_state.travel("Jump")
+	velocity = input_movement * speed
+
+	move_and_slide()
+
+func clear_collision():
+	$CollisionShape2D.disabled = true
+
+func create_collision():
+	$CollisionShape2D.disabled = false
