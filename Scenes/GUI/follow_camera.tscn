@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://bfsrmiqmra31x"]
+
+[ext_resource type="Script" path="res://Scenes/camera_2d.gd" id="1_1te2s"]
+
+[node name="follow_camera" type="Camera2D" node_paths=PackedStringArray("player", "tilemap")]
+zoom = Vector2(2.25, 2.25)
+limit_left = 0
+limit_top = 0
+script = ExtResource("1_1te2s")
+player = NodePath("")
+tilemap = NodePath("")

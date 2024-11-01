@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://bpp4vgs8dl4nr"]
+
+[ext_resource type="Script" path="res://Scenes/Levels/camera_panning.gd" id="1_a40ta"]
+
+[node name="camera_panning" type="Camera2D"]
+anchor_mode = 0
+zoom = Vector2(2.25, 2.25)
+limit_left = 0
+limit_top = 0
+script = ExtResource("1_a40ta")
