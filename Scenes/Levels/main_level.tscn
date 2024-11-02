@@ -1,4 +1,4 @@
-[gd_scene load_steps=67 format=3 uid="uid://dkmeoigp8f5b3"]
+[gd_scene load_steps=71 format=3 uid="uid://dkmeoigp8f5b3"]
 
 [ext_resource type="Script" path="res://Scripts/Player.gd" id="1_p6bv2"]
 [ext_resource type="Texture2D" uid="uid://bmwfjrc5x4w1d" path="res://Assets/Characters/MC/Player-rpg (1).png" id="2_5r80r"]
@@ -6,6 +6,10 @@
 [ext_resource type="PackedScene" uid="uid://bfsrmiqmra31x" path="res://Scenes/GUI/follow_camera.tscn" id="3_vnsn3"]
 [ext_resource type="Texture2D" uid="uid://ddbh1y6xek7ek" path="res://Assets/tiles/fullspritesheet/spritesheet.png" id="4_denhi"]
 [ext_resource type="PackedScene" uid="uid://cyuel0j447lc8" path="res://Scenes/Interactables/coin.tscn" id="5_uluf0"]
+[ext_resource type="Texture2D" uid="uid://mbxjchyuuuc5" path="res://Assets/ui (new)/HeartSpriteSheet.png" id="7_3d8h4"]
+[ext_resource type="Script" path="res://Scenes/GUI/GUI.gd" id="7_32oft"]
+[ext_resource type="Texture2D" uid="uid://d4jg7858ldq3t" path="res://Assets/ui (new)/player_head.png" id="8_0kshx"]
+[ext_resource type="Texture2D" uid="uid://cksketa4avmky" path="res://Assets/props_itens/coin3_16x16.png" id="10_km2f3"]
 
 [sub_resource type="Animation" id="Animation_ygs44"]
 resource_name = "Dead"
@@ -1054,3 +1058,30 @@ position = Vector2(98, 115)
 
 [node name="coin3" parent="." instance=ExtResource("5_uluf0")]
 position = Vector2(78, 144)
+
+[node name="GUI" type="CanvasLayer" parent="."]
+script = ExtResource("7_32oft")
+
+[node name="heart" type="Sprite2D" parent="GUI"]
+position = Vector2(124, 53)
+scale = Vector2(2, 2)
+texture = ExtResource("7_3d8h4")
+hframes = 5
+
+[node name="player_head" type="Sprite2D" parent="GUI"]
+position = Vector2(60, 50)
+scale = Vector2(3, 3)
+texture = ExtResource("8_0kshx")
+
+[node name="coin" type="Sprite2D" parent="GUI"]
+position = Vector2(124, 83)
+scale = Vector2(2, 2)
+texture = ExtResource("10_km2f3")
+hframes = 14
+
+[node name="coin_number" type="Label" parent="GUI"]
+offset_left = 143.0
+offset_top = 69.0
+offset_right = 193.0
+offset_bottom = 97.0
+theme_override_font_sizes/font_size = 20
