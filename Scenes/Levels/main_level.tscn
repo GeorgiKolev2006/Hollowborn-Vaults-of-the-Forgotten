@@ -1,4 +1,4 @@
-[gd_scene load_steps=62 format=3 uid="uid://dkmeoigp8f5b3"]
+[gd_scene load_steps=67 format=3 uid="uid://dkmeoigp8f5b3"]
 
 [ext_resource type="Script" path="res://Scripts/Player.gd" id="1_p6bv2"]
 [ext_resource type="Texture2D" uid="uid://bmwfjrc5x4w1d" path="res://Assets/Characters/MC/Player-rpg (1).png" id="2_5r80r"]
@@ -9,7 +9,6 @@
 
 [sub_resource type="Animation" id="Animation_ygs44"]
 resource_name = "Dead"
-length = 0.5
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -21,6 +20,20 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1),
 "update": 1,
 "values": [100, 101, 102, 103, 104]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(1),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"on_states_reset"
+}]
 }
 
 [sub_resource type="Animation" id="Animation_i370a"]
@@ -630,6 +643,29 @@ size = Vector2(13, 6)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1p4wi"]
 size = Vector2(23, 30.875)
 
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_ifxe7"]
+animation = &"Dead"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_rk7hs"]
+animation = &"Dead"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_mia44"]
+animation = &"Dead"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_x32h3"]
+animation = &"Dead"
+
+[sub_resource type="AnimationNodeBlendSpace2D" id="AnimationNodeBlendSpace2D_adfd8"]
+blend_point_0/node = SubResource("AnimationNodeAnimation_ifxe7")
+blend_point_0/pos = Vector2(-1, 0)
+blend_point_1/node = SubResource("AnimationNodeAnimation_rk7hs")
+blend_point_1/pos = Vector2(0, 1)
+blend_point_2/node = SubResource("AnimationNodeAnimation_mia44")
+blend_point_2/pos = Vector2(1, 0)
+blend_point_3/node = SubResource("AnimationNodeAnimation_x32h3")
+blend_point_3/pos = Vector2(0, -1)
+blend_mode = 1
+
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_gxm8f"]
 animation = &"IdleLeft"
 
@@ -746,6 +782,8 @@ advance_mode = 2
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_vdvqd"]
 
 [sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_tq811"]
+states/Dead/node = SubResource("AnimationNodeBlendSpace2D_adfd8")
+states/Dead/position = Vector2(575, 100)
 states/End/position = Vector2(712, 100)
 states/Idle/node = SubResource("AnimationNodeBlendSpace2D_a5sc1")
 states/Idle/position = Vector2(281, 100)
@@ -757,7 +795,7 @@ states/Sword/position = Vector2(359, 189)
 states/Walk/node = SubResource("AnimationNodeBlendSpace2D_1jgt5")
 states/Walk/position = Vector2(436, 100)
 transitions = ["Start", "Idle", SubResource("AnimationNodeStateMachineTransition_qowew"), "Walk", "Idle", SubResource("AnimationNodeStateMachineTransition_8oup2"), "Idle", "Sword", SubResource("AnimationNodeStateMachineTransition_ytyfb"), "Sword", "Idle", SubResource("AnimationNodeStateMachineTransition_8njkq"), "Sword", "Walk", SubResource("AnimationNodeStateMachineTransition_w17r7"), "Walk", "Sword", SubResource("AnimationNodeStateMachineTransition_kok2s"), "Idle", "Jump", SubResource("AnimationNodeStateMachineTransition_xfe8t"), "Jump", "Idle", SubResource("AnimationNodeStateMachineTransition_8ycse"), "Jump", "Walk", SubResource("AnimationNodeStateMachineTransition_tas1p"), "Walk", "Jump", SubResource("AnimationNodeStateMachineTransition_x2gad"), "Idle", "Walk", SubResource("AnimationNodeStateMachineTransition_vdvqd")]
-graph_offset = Vector2(0, -35.9508)
+graph_offset = Vector2(28, -25.9508)
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_kp623"]
 texture = ExtResource("4_denhi")
@@ -954,6 +992,7 @@ y_sort_enabled = true
 
 [node name="Player" type="CharacterBody2D" parent="."]
 y_sort_enabled = true
+position = Vector2(202, 83)
 script = ExtResource("1_p6bv2")
 
 [node name="Sprite2D" type="Sprite2D" parent="Player"]
@@ -981,6 +1020,7 @@ debug_color = Color(0.783875, 0.116296, 0.236762, 0.42)
 [node name="anim_tree" type="AnimationTree" parent="Player"]
 tree_root = SubResource("AnimationNodeStateMachine_tq811")
 anim_player = NodePath("../anim")
+parameters/Dead/blend_position = Vector2(0, 0)
 parameters/Idle/blend_position = Vector2(0, 0)
 parameters/Jump/blend_position = Vector2(0, 0)
 parameters/Sword/blend_position = Vector2(0, 0)

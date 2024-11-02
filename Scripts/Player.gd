@@ -9,6 +9,7 @@ var current_states = player_states.MOVE
 var input_movement = Vector2.ZERO
 var speed = 70
 
+
 func _ready():
 	$sword/CollisionShape2D.disabled = true
 
@@ -21,6 +22,8 @@ func _physics_process(delta):
 			sword()
 		player_states.JUMP:
 			jump()
+		player_states.DEAD:
+			dead()
 
 func move():
 	input_movement = Input.get_vector("move_left", "move_right", "move_up", "move_down")
@@ -43,6 +46,9 @@ func move():
 	if Input.is_action_just_pressed("jump"):
 		current_states = player_states.JUMP
 	
+	if player_data.health <= 0:
+		current_states = player_states.DEAD
+	
 	move_and_slide()
 
 func sword():
@@ -56,6 +62,12 @@ func jump():
 	velocity = input_movement * speed
 
 	move_and_slide()
+
+func dead():
+	anim_state.travel("Dead")
+	await get_tree().create_timer(1).timeout
+	player_data.health = 4
+	get_tree().reload_current_scene()
 
 func clear_collision():
 	$CollisionShape2D.disabled = true
