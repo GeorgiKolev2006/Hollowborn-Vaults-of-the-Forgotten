@@ -1,7 +1,8 @@
-[gd_scene load_steps=72 format=3 uid="uid://dkmeoigp8f5b3"]
+[gd_scene load_steps=75 format=3 uid="uid://dkmeoigp8f5b3"]
 
 [ext_resource type="Script" path="res://Scripts/Player.gd" id="1_p6bv2"]
 [ext_resource type="Texture2D" uid="uid://bmwfjrc5x4w1d" path="res://Assets/Characters/MC/Player-rpg (1).png" id="2_5r80r"]
+[ext_resource type="Shader" path="res://Scenes/Shaders/hurt.gdshader" id="2_l8r1n"]
 [ext_resource type="PackedScene" uid="uid://gms8o70b0sws" path="res://Scenes/Interactables/crate.tscn" id="3_45t6w"]
 [ext_resource type="PackedScene" uid="uid://bfsrmiqmra31x" path="res://Scenes/GUI/follow_camera.tscn" id="3_vnsn3"]
 [ext_resource type="Texture2D" uid="uid://ddbh1y6xek7ek" path="res://Assets/tiles/fullspritesheet/spritesheet.png" id="4_denhi"]
@@ -11,6 +12,12 @@
 [ext_resource type="Texture2D" uid="uid://d4jg7858ldq3t" path="res://Assets/ui (new)/player_head.png" id="8_0kshx"]
 [ext_resource type="Texture2D" uid="uid://cksketa4avmky" path="res://Assets/props_itens/coin3_16x16.png" id="10_km2f3"]
 [ext_resource type="PackedScene" uid="uid://dnvnt4nrmcavq" path="res://Scenes/Enemy/enemy_stoner.tscn" id="11_6ipuy"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_lcky8"]
+resource_local_to_scene = true
+shader = ExtResource("2_l8r1n")
+shader_parameter/flash_color = Color(1, 0, 0, 1)
+shader_parameter/flash_modifier = 0.0
 
 [sub_resource type="Animation" id="Animation_ygs44"]
 resource_name = "Dead"
@@ -802,6 +809,8 @@ states/Walk/position = Vector2(436, 100)
 transitions = ["Start", "Idle", SubResource("AnimationNodeStateMachineTransition_qowew"), "Walk", "Idle", SubResource("AnimationNodeStateMachineTransition_8oup2"), "Idle", "Sword", SubResource("AnimationNodeStateMachineTransition_ytyfb"), "Sword", "Idle", SubResource("AnimationNodeStateMachineTransition_8njkq"), "Sword", "Walk", SubResource("AnimationNodeStateMachineTransition_w17r7"), "Walk", "Sword", SubResource("AnimationNodeStateMachineTransition_kok2s"), "Idle", "Jump", SubResource("AnimationNodeStateMachineTransition_xfe8t"), "Jump", "Idle", SubResource("AnimationNodeStateMachineTransition_8ycse"), "Jump", "Walk", SubResource("AnimationNodeStateMachineTransition_tas1p"), "Walk", "Jump", SubResource("AnimationNodeStateMachineTransition_x2gad"), "Idle", "Walk", SubResource("AnimationNodeStateMachineTransition_vdvqd")]
 graph_offset = Vector2(28, -25.9508)
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_v8wjo"]
+
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_kp623"]
 texture = ExtResource("4_denhi")
 0:0/0 = 0
@@ -1001,6 +1010,7 @@ position = Vector2(202, 83)
 script = ExtResource("1_p6bv2")
 
 [node name="Sprite2D" type="Sprite2D" parent="Player"]
+material = SubResource("ShaderMaterial_lcky8")
 texture = ExtResource("2_5r80r")
 hframes = 12
 vframes = 9
@@ -1030,6 +1040,14 @@ parameters/Idle/blend_position = Vector2(0, 0)
 parameters/Jump/blend_position = Vector2(0, 0)
 parameters/Sword/blend_position = Vector2(0, 0)
 parameters/Walk/blend_position = Vector2(0, 0)
+
+[node name="hitbox" type="Area2D" parent="Player"]
+collision_layer = 8
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player/hitbox"]
+shape = SubResource("CircleShape2D_v8wjo")
+debug_color = Color(0.405765, 0.0066508, 0.058604, 0.42)
 
 [node name="follow_camera" parent="." node_paths=PackedStringArray("player", "tilemap") instance=ExtResource("3_vnsn3")]
 player = NodePath("../Player")
@@ -1089,3 +1107,11 @@ theme_override_font_sizes/font_size = 20
 
 [node name="enemy_stoner" parent="." instance=ExtResource("11_6ipuy")]
 position = Vector2(185, 155)
+
+[node name="enemy_stoner2" parent="." instance=ExtResource("11_6ipuy")]
+position = Vector2(250, 178)
+
+[node name="enemy_stoner3" parent="." instance=ExtResource("11_6ipuy")]
+position = Vector2(305, 147)
+
+[connection signal="area_entered" from="Player/hitbox" to="Player" method="_on_hitbox_area_entered"]

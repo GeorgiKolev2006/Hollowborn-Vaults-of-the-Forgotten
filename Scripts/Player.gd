@@ -69,8 +69,16 @@ func dead():
 	player_data.health = 4
 	get_tree().reload_current_scene()
 
+func flash():
+	$Sprite2D.material.set_shader_parameter("flash_modifier", 0.7)
+	await get_tree().create_timer(0.3).timeout
+	$Sprite2D.material.set_shader_parameter("flash_modifier", 0)
+	
 func clear_collision():
 	$CollisionShape2D.disabled = true
 
 func create_collision():
 	$CollisionShape2D.disabled = false
+
+func _on_hitbox_area_entered(area):
+	flash()

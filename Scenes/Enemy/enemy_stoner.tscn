@@ -1,7 +1,14 @@
-[gd_scene load_steps=11 format=3 uid="uid://dnvnt4nrmcavq"]
+[gd_scene load_steps=13 format=3 uid="uid://dnvnt4nrmcavq"]
 
 [ext_resource type="Script" path="res://Scenes/Enemy/enemy_stoner.gd" id="1_o1o2c"]
 [ext_resource type="Texture2D" uid="uid://c38rajpnhuavf" path="res://Assets/enemies/stoner/enemy_rpg.png" id="1_p7jtj"]
+[ext_resource type="Shader" path="res://Scenes/Shaders/hurt.gdshader" id="2_1iwic"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_0n6w0"]
+resource_local_to_scene = true
+shader = ExtResource("2_1iwic")
+shader_parameter/flash_color = Color(0.976471, 0, 0, 1)
+shader_parameter/flash_modifier = 0.0
 
 [sub_resource type="Animation" id="Animation_20iob"]
 length = 0.001
@@ -105,6 +112,7 @@ radius = 15.0
 script = ExtResource("1_o1o2c")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_0n6w0")
 scale = Vector2(1.5, 1.5)
 texture = ExtResource("1_p7jtj")
 hframes = 5
@@ -125,7 +133,7 @@ autostart = true
 
 [node name="EnemyHitbox" type="Area2D" parent="."]
 collision_layer = 4
-collision_mask = 2
+collision_mask = 10
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="EnemyHitbox"]
 shape = SubResource("CircleShape2D_ji8wv")
