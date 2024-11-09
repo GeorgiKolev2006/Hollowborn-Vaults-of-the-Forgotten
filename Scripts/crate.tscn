@@ -142,12 +142,13 @@ collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="hitbox"]
 shape = SubResource("CircleShape2D_07jqu")
+disabled = true
 debug_color = Color(0.899446, 0.312901, 0, 0.42)
 
 [node name="anim" type="AnimationPlayer" parent="."]
 libraries = {
 "": SubResource("AnimationLibrary_8ws32")
 }
-autoplay = "Idle"
+autoplay = "Destroyed"
 
 [connection signal="area_entered" from="hitbox" to="." method="_on_hitbox_area_entered"]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=71 format=3 uid="uid://dkmeoigp8f5b3"]
+[gd_scene load_steps=72 format=3 uid="uid://dkmeoigp8f5b3"]
 
 [ext_resource type="Script" path="res://Scripts/Player.gd" id="1_p6bv2"]
 [ext_resource type="Texture2D" uid="uid://bmwfjrc5x4w1d" path="res://Assets/Characters/MC/Player-rpg (1).png" id="2_5r80r"]
@@ -10,6 +10,7 @@
 [ext_resource type="Script" path="res://Scenes/GUI/GUI.gd" id="7_32oft"]
 [ext_resource type="Texture2D" uid="uid://d4jg7858ldq3t" path="res://Assets/ui (new)/player_head.png" id="8_0kshx"]
 [ext_resource type="Texture2D" uid="uid://cksketa4avmky" path="res://Assets/props_itens/coin3_16x16.png" id="10_km2f3"]
+[ext_resource type="PackedScene" uid="uid://dnvnt4nrmcavq" path="res://Scenes/Enemy/enemy_stoner.tscn" id="11_6ipuy"]
 
 [sub_resource type="Animation" id="Animation_ygs44"]
 resource_name = "Dead"
@@ -1085,3 +1086,6 @@ offset_top = 69.0
 offset_right = 193.0
 offset_bottom = 97.0
 theme_override_font_sizes/font_size = 20
+
+[node name="enemy_stoner" parent="." instance=ExtResource("11_6ipuy")]
+position = Vector2(185, 155)
