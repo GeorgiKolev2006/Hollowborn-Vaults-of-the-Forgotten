@@ -1056,6 +1056,9 @@ tilemap = NodePath("../Ground")
 [node name="crate" parent="." instance=ExtResource("3_45t6w")]
 position = Vector2(104, 58)
 
+[node name="crate2" parent="." instance=ExtResource("3_45t6w")]
+position = Vector2(247, 145)
+
 [node name="Ground" type="TileMap" parent="."]
 z_index = -5
 y_sort_enabled = true

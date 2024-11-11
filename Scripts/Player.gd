@@ -53,6 +53,10 @@ func move():
 
 func sword():
 	anim_state.travel("Sword")
+	$sword/CollisionShape2D.disabled = false
+	await $sword/AnimationPlayer.animation_finished
+	$sword/CollisionShape2D.disabled = true 
+	on_states_reset() 
 
 func on_states_reset():
 	current_states = player_states.MOVE
