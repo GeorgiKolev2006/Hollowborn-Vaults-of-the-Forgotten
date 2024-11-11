@@ -2,6 +2,7 @@ extends CharacterBody2D
 
 @onready var anim_tree = $anim_tree
 @onready var anim_state = anim_tree.get("parameters/playback")
+@onready var coin_scene = preload("res://Scenes/Interactables/coin.tscn")
 
 enum player_states {MOVE, SWORD, JUMP, DEAD}
 var current_states = player_states.MOVE
@@ -53,10 +54,6 @@ func move():
 
 func sword():
 	anim_state.travel("Sword")
-	$sword/CollisionShape2D.disabled = false
-	await $sword/AnimationPlayer.animation_finished
-	$sword/CollisionShape2D.disabled = true 
-	on_states_reset() 
 
 func on_states_reset():
 	current_states = player_states.MOVE
