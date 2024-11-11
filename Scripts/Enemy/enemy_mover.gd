@@ -69,6 +69,7 @@ func dead_animation():
 	loot_coin()
 
 func loot_coin():
-	var coin = coin_loot.instantiate()
-	coin.global_position = global_position
-	get_tree().get_root().add_child(coin)
+	if randf() < 0.5:
+		var coin = coin_loot.instantiate()
+		coin.global_position = global_position
+		get_tree().get_root().add_child(coin)

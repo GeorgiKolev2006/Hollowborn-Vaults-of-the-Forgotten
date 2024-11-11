@@ -1,4 +1,5 @@
 extends enemy_movement
+var coin_scene = preload("res://Scenes/Interactables/Coin.tscn")
 
 func _ready():
 	random_generation()
