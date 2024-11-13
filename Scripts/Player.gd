@@ -4,11 +4,13 @@ extends CharacterBody2D
 @onready var anim_state = anim_tree.get("parameters/playback")
 @onready var coin_scene = preload("res://Scenes/Interactables/coin.tscn")
 
-var save_file_path = "user://save/"
-var save_file_name = "PlayerSave.tres"
+var save_directory = "user://save/"
+var save_file_name = "PlayerSave.save"
+var save_file_path = save_directory + save_file_name
 
 enum player_states {MOVE, SWORD, JUMP, DEAD}
 var current_states = player_states.MOVE
+
 
 var input_movement = Vector2.ZERO
 var playerData = Player_data.new()
@@ -16,6 +18,13 @@ var playerData = Player_data.new()
 func _ready():
 	$sword/CollisionShape2D.disabled = true
 	load_data()
+	
+
+func _process(delta):
+	if Input.is_action_just_pressed("save"):  
+		save_data()
+	if Input.is_action_just_pressed("load"):
+		load_data()
 
 func _physics_process(delta):
 	match current_states:
@@ -86,25 +95,64 @@ func create_collision():
 func _on_hitbox_area_entered(area):
 	flash()
 
+func take_damage():
+	player_data.health -= 1
+	print("Player Health: " + str(player_data.health))
+	# Add damage effects here, like flashing or invincibility frames
+	flash()
+
+
 func save_data():
-	var playerData = Player_data.new()
-	playerData.SavePos = position
-	playerData.health = playerData.health
-	playerData.coin = playerData.coin
-	var save_file = ResourceSaver.save(save_file_path + save_file_name, playerData)
-	if save_file == OK:
-		print("Game saved successfully")
+	# Use DirAccess to ensure the save directory exists
+	var dir_access = DirAccess.open(save_directory)
+	if dir_access == null:
+		print("Directory does not exist, creating it...")
+		var dir = DirAccess.open("user://")
+		dir.make_dir("save")  # Create the save directory manually
 	else:
-		print("Failed to save game")
+		print("Directory exists!")
+	
+	# Save data to the file
+	var save_file = FileAccess.open(save_file_path, FileAccess.WRITE)
+	if save_file == null:
+		print("Failed to open file for saving.")
+		return
+	else:
+		print("File opened for saving.")
+	
+	var data_to_save = {
+		"position": position,
+		"health": player_data.health,
+		"coin": player_data.coin
+	}
+	
+	print("Saving data: ", data_to_save)
+	save_file.store_var(data_to_save)
+	save_file.close()
+	print("File saved and closed.")
 
 func load_data():
-	var loaded_data = ResourceLoader.load(save_file_path + save_file_name)
-	if loaded_data and loaded_data is Player_data:
-		playerData = loaded_data
-		print("Game loaded successfully")
-		apply_loaded_data()  # Make sure this line is properly indented
+	var loaded_data = FileAccess.open(save_file_path, FileAccess.READ)
+	if loaded_data == null:
+		print("Failed to open file for loading.")
+		return
 	else:
-		print("No saved game found or failed to load")
+		print("File opened for loading.")
+	
+	var data = loaded_data.get_var()
+	print("Loaded data: ", data)
+	
+	if data:
+		position = data["position"]
+		player_data.health = data["health"]
+		player_data.coin = data["coin"]
+		print("Game data loaded successfully.")
+	else:
+		print("No data to load.")
+	
+	loaded_data.close()
+	print("File loaded and closed.")
+
 
 func apply_loaded_data():
 	position = playerData.SavePos
