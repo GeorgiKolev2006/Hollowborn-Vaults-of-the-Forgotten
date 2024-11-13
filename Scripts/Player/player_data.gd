@@ -1,5 +1,10 @@
 extends Node
 class_name Player_data
 
-static var coin = 0
-static var health = 4
+var Playerspeed = 70
+var coin = 0
+var health = 4
+@export var SavePos : Vector2
+
+func UpdatePos(value : Vector2):
+	SavePos += value

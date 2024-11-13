@@ -2,21 +2,20 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://djtnin7l1qm0y"
-path.s3tc="res://.godot/imported/doc.png-dec852366af7f6535f4323a2fb27ede2.s3tc.ctex"
+uid="uid://vif8kpan847u"
+path="res://.godot/imported/iron_wood_vertical_south_left_004.png-028e6d946071f7b36df8bc3ba7d3fb55.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
-"vram_texture": true
+"vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Characters/doc.png"
-dest_files=["res://.godot/imported/doc.png-dec852366af7f6535f4323a2fb27ede2.s3tc.ctex"]
+source_file="res://Assets/tiles/Dungeon tileset/Dungeon Tileset V1/Multiple props/Interactable/iron_wood_vertical_south_left_004.png"
+dest_files=["res://.godot/imported/iron_wood_vertical_south_left_004.png-028e6d946071f7b36df8bc3ba7d3fb55.ctex"]
 
 [params]
 
-compress/mode=2
+compress/mode=0
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1

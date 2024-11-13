@@ -6,7 +6,7 @@ enum enemy_states {MOVERIGHT, MOVELEFT, MOVEUP, MOVEDOWN, DEAD}
 
 @onready var dead_anim = preload("res://Scenes/Effects/dead_fx.tscn")
 @onready var coin_loot = preload("res://Scenes/Interactables/coin.tscn")
-@export var speed = 20
+@export var speed = 10
 @export var health = 3
 var dir
 

@@ -4,16 +4,18 @@ extends CharacterBody2D
 @onready var anim_state = anim_tree.get("parameters/playback")
 @onready var coin_scene = preload("res://Scenes/Interactables/coin.tscn")
 
+var save_file_path = "user://save/"
+var save_file_name = "PlayerSave.tres"
+
 enum player_states {MOVE, SWORD, JUMP, DEAD}
 var current_states = player_states.MOVE
 
 var input_movement = Vector2.ZERO
-var speed = 70
-
+var playerData = Player_data.new()
 
 func _ready():
 	$sword/CollisionShape2D.disabled = true
-
+	load_data()
 
 func _physics_process(delta):
 	match current_states:
@@ -35,7 +37,7 @@ func move():
 		anim_tree.set("parameters/Sword/blend_position", input_movement)
 		anim_tree.set("parameters/Jump/blend_position", input_movement)
 		anim_state.travel("Walk")
-		velocity = input_movement * speed
+		velocity = input_movement * playerData.Playerspeed
 	
 	if input_movement == Vector2.ZERO:
 		anim_state.travel("Idle")
@@ -60,7 +62,7 @@ func on_states_reset():
 
 func jump():
 	anim_state.travel("Jump")
-	velocity = input_movement * speed
+	velocity = input_movement * playerData.Playerspeed
 
 	move_and_slide()
 
@@ -83,3 +85,28 @@ func create_collision():
 
 func _on_hitbox_area_entered(area):
 	flash()
+
+func save_data():
+	var playerData = Player_data.new()
+	playerData.SavePos = position
+	playerData.health = playerData.health
+	playerData.coin = playerData.coin
+	var save_file = ResourceSaver.save(save_file_path + save_file_name, playerData)
+	if save_file == OK:
+		print("Game saved successfully")
+	else:
+		print("Failed to save game")
+
+func load_data():
+	var loaded_data = ResourceLoader.load(save_file_path + save_file_name)
+	if loaded_data and loaded_data is Player_data:
+		playerData = loaded_data
+		print("Game loaded successfully")
+		apply_loaded_data()  # Make sure this line is properly indented
+	else:
+		print("No saved game found or failed to load")
+
+func apply_loaded_data():
+	position = playerData.SavePos
+	playerData.health = playerData.health
+	playerData.coin = playerData.coin

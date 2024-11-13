@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c3puuyl55e3kj"
-path="res://.godot/imported/pumpkin_dude.png-e675567281519132c3b4be6903b3b6de.ctex"
+uid="uid://w8iwq3ju7sds"
+path="res://.godot/imported/crate_wood_shard_003.png-0640d42c8031c5eabf1c365fe5acd46b.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Characters/pumpkin_dude.png"
-dest_files=["res://.godot/imported/pumpkin_dude.png-e675567281519132c3b4be6903b3b6de.ctex"]
+source_file="res://Assets/tiles/Dungeon tileset/Dungeon Tileset V1/Multiple props/Interactable/crate_wood_shard_003.png"
+dest_files=["res://.godot/imported/crate_wood_shard_003.png-0640d42c8031c5eabf1c365fe5acd46b.ctex"]
 
 [params]
 
