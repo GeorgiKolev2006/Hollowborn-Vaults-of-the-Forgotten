@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://dnvnt4nrmcavq"]
+[gd_scene load_steps=14 format=3 uid="uid://dnvnt4nrmcavq"]
 
 [ext_resource type="Script" path="res://Scenes/Enemy/enemy_stoner.gd" id="1_o1o2c"]
 [ext_resource type="Texture2D" uid="uid://c38rajpnhuavf" path="res://Assets/enemies/stoner/enemy_rpg.png" id="1_p7jtj"]
@@ -103,10 +103,14 @@ _data = {
 }
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_mlwh5"]
-radius = 13.0
+radius = 12.3693
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ji8wv"]
+radius = 14.0
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_5hjgv"]
 radius = 15.0
+height = 32.0
 
 [node name="enemy_stoner" type="CharacterBody2D"]
 script = ExtResource("1_o1o2c")
@@ -138,6 +142,11 @@ collision_mask = 10
 [node name="CollisionShape2D" type="CollisionShape2D" parent="EnemyHitbox"]
 shape = SubResource("CircleShape2D_ji8wv")
 debug_color = Color(0.870588, 0.0509804, 0, 0.419608)
+
+[node name="EnemyAttack" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="EnemyAttack"]
+shape = SubResource("CapsuleShape2D_5hjgv")
 
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
 [connection signal="area_entered" from="EnemyHitbox" to="." method="_on_enemy_hitbox_area_entered"]

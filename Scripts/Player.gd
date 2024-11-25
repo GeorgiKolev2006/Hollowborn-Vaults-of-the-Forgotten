@@ -25,6 +25,8 @@ func _process(delta):
 		save_data()
 	if Input.is_action_just_pressed("load"):
 		load_data()
+	if Input.is_action_just_pressed("deletesave"):
+		print("F7 pressed!")
 
 func _physics_process(delta):
 	match current_states:
@@ -72,7 +74,6 @@ func on_states_reset():
 func jump():
 	anim_state.travel("Jump")
 	velocity = input_movement * playerData.Playerspeed
-
 	move_and_slide()
 
 func dead():
@@ -96,10 +97,14 @@ func _on_hitbox_area_entered(area):
 	flash()
 
 func take_damage():
-	player_data.health -= 1
-	print("Player Health: " + str(player_data.health))
-	# Add damage effects here, like flashing or invincibility frames
-	flash()
+	if player_data.health > 0:
+		player_data.health -= 1
+		print("Player Health: ", player_data.health)
+		flash()  # Optional: Visual damage feedback
+		if player_data.health <= 0:
+			current_states = player_states.DEAD
+	else:
+		print("Player is already dead!")
 
 
 func save_data():
@@ -125,11 +130,36 @@ func save_data():
 		"health": player_data.health,
 		"coin": player_data.coin
 	}
-	
 	print("Saving data: ", data_to_save)
 	save_file.store_var(data_to_save)
 	save_file.close()
 	print("File saved and closed.")
+
+
+func delete_save():
+	if Input.is_action_just_pressed("deletesave"):
+		print("F7 pressed!")
+
+		var file_path = save_file_path + save_file_name
+		print("File Path: ", file_path)  # Debug log for the file path
+
+		var dir = DirAccess.open("user://")
+		if dir:
+			print("Directory opened successfully!")  # Debug log for successful directory access
+			
+			if dir.file_exists(file_path):
+				print("File exists: ", file_path)  # Debug log for file existence check
+				var err = dir.remove(file_path)
+				if err == OK:
+					print("Save file deleted successfully.")
+				else:
+					print("Error deleting file:", err)
+			else:
+				print("No save file found to delete.")
+		else:
+			print("Failed to open directory.")
+
+
 
 func load_data():
 	var loaded_data = FileAccess.open(save_file_path, FileAccess.READ)

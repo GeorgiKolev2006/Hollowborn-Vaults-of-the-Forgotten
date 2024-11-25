@@ -6,9 +6,16 @@ enum enemy_states {MOVERIGHT, MOVELEFT, MOVEUP, MOVEDOWN, DEAD}
 
 @onready var dead_anim = preload("res://Scenes/Effects/dead_fx.tscn")
 @onready var coin_loot = preload("res://Scenes/Interactables/coin.tscn")
+@onready var hitbox_area = $EnemyHitbox
+@onready var attack_area = $EnemyAttack
+@onready var player = get_node("Player")
+@onready var navigation = get_parent().get_node("Navigation2D")
 @export var speed = 10
 @export var health = 3
 var dir
+
+func _ready() -> void:
+	random_generation()
 
 func _physics_process(delta):
 	if health <= 0:
@@ -72,4 +79,4 @@ func loot_coin():
 	if randf() < 0.5:
 		var coin = coin_loot.instantiate()
 		coin.global_position = global_position
-		get_tree().get_root().add_child(coin)
+		get_tree().get_root().add_child(coin) 
