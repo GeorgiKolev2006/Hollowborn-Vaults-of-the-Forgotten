@@ -963,7 +963,7 @@ _data = {
 }
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_a4kde"]
-size = Vector2(77, 5)
+size = Vector2(13, 6)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1p4wi"]
 size = Vector2(23, 30.875)
@@ -1123,7 +1123,7 @@ transitions = ["Start", "Idle", SubResource("AnimationNodeStateMachineTransition
 graph_offset = Vector2(28, -25.9508)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_v8wjo"]
-radius = 13.0384
+radius = 22.0
 
 [node name="MainSC" type="Node2D"]
 y_sort_enabled = true
@@ -1230,12 +1230,18 @@ theme_override_font_sizes/font_size = 20
 
 [node name="enemy_stoner" parent="." instance=ExtResource("11_6ipuy")]
 position = Vector2(151, 165)
+speed = 10
+health = 3
 
 [node name="enemy_stoner2" parent="." instance=ExtResource("11_6ipuy")]
 position = Vector2(173, 91)
+speed = 10
+health = 3
 
 [node name="enemy_stoner3" parent="." instance=ExtResource("11_6ipuy")]
 position = Vector2(187, 241)
+speed = 10
+health = 3
 
 [node name="Player" type="CharacterBody2D" parent="."]
 y_sort_enabled = true
@@ -1254,7 +1260,7 @@ libraries = {
 }
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
-position = Vector2(-32.5, 12.5)
+position = Vector2(-0.5, 13)
 shape = SubResource("RectangleShape2D_a4kde")
 
 [node name="sword" type="Area2D" parent="Player" groups=["Sword"]]

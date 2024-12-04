@@ -1,0 +1,46 @@
+[gd_scene load_steps=5 format=3 uid="uid://cvgevlwsmtaoa"]
+
+[ext_resource type="Script" path="res://Scenes/UI/Main Menu/main_menu.gd" id="1_es7kg"]
+[ext_resource type="Script" path="res://Scenes/UI/Main Menu/start.gd" id="2_hm0du"]
+[ext_resource type="Script" path="res://Scenes/UI/Main Menu/options.gd" id="3_so5mo"]
+[ext_resource type="Script" path="res://Scenes/UI/Main Menu/quit.gd" id="4_wcvsk"]
+
+[node name="Main Menu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_es7kg")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -122.0
+offset_right = 187.0
+offset_bottom = 49.0
+grow_vertical = 0
+
+[node name="Start" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+focus_neighbor_top = NodePath("../Quit")
+text = "START"
+script = ExtResource("2_hm0du")
+
+[node name="Options" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "OPTIONS"
+script = ExtResource("3_so5mo")
+
+[node name="Quit" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+focus_neighbor_bottom = NodePath("../Start")
+text = "QUIT"
+script = ExtResource("4_wcvsk")
+
+[connection signal="pressed" from="VBoxContainer/Start" to="." method="_on_start_pressed"]
+[connection signal="pressed" from="VBoxContainer/Options" to="." method="_on_options_pressed"]
+[connection signal="pressed" from="VBoxContainer/Quit" to="." method="_on_quit_pressed"]

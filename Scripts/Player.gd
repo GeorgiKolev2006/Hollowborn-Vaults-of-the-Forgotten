@@ -16,6 +16,7 @@ var input_movement = Vector2.ZERO
 var playerData = Player_data.new()
 
 func _ready():
+	$sword.add_to_group("Sword")
 	$sword/CollisionShape2D.disabled = true
 	load_data()
 	
