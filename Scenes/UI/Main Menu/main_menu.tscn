@@ -1,23 +1,32 @@
-[gd_scene load_steps=9 format=3 uid="uid://cvgevlwsmtaoa"]
+[gd_scene load_steps=12 format=3 uid="uid://cvgevlwsmtaoa"]
 
 [ext_resource type="Script" path="res://Scenes/UI/Main Menu/main_menu.gd" id="1_es7kg"]
 [ext_resource type="Script" path="res://Scenes/UI/Main Menu/start.gd" id="2_hm0du"]
+[ext_resource type="Texture2D" uid="uid://ctg7q16alk2i6" path="res://Assets/Icons/DALL·E 2024-12-11 21.05.30.PNG.webp" id="2_y08pr"]
 [ext_resource type="Script" path="res://Scenes/UI/Main Menu/options.gd" id="3_so5mo"]
 [ext_resource type="Script" path="res://Scenes/UI/Main Menu/quit.gd" id="4_wcvsk"]
+[ext_resource type="PackedScene" uid="uid://dr7qlqu1llxvy" path="res://Scenes/UI/Main Menu/settings.tscn" id="5_5emh1"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_dlf2e"]
+texture = ExtResource("2_y08pr")
+modulate_color = Color(0.255659, 0.255659, 0.255659, 1)
 
 [sub_resource type="LabelSettings" id="LabelSettings_dvjd5"]
 font_size = 40
-font_color = Color(0.542885, 0.917038, 0.975609, 1)
+font_color = Color(0.903519, 0.69604, 0.0139479, 1)
 outline_size = 3
 outline_color = Color(0, 0, 0.00784314, 1)
 shadow_size = 10
 shadow_offset = Vector2(-5, -5)
 
 [sub_resource type="Theme" id="Theme_3ryll"]
+default_font_size = 30
 
 [sub_resource type="Theme" id="Theme_78vtk"]
+default_font_size = 30
 
 [sub_resource type="Theme" id="Theme_ay84o"]
+default_font_size = 30
 
 [node name="Main Menu" type="Control"]
 layout_mode = 3
@@ -28,19 +37,23 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_es7kg")
 
-[node name="ColorRect" type="ColorRect" parent="."]
+[node name="settings" parent="." instance=ExtResource("5_5emh1")]
 layout_mode = 0
-offset_right = 1153.0
-offset_bottom = 645.0
-color = Color(0.176419, 0.176419, 0.176419, 1)
+anchors_preset = 0
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 0
+offset_right = 1152.0
+offset_bottom = 736.0
+theme_override_styles/panel = SubResource("StyleBoxTexture_dlf2e")
 
 [node name="Label" type="Label" parent="."]
 layout_mode = 0
-offset_left = 202.0
+offset_left = 121.0
 offset_top = 113.0
-offset_right = 993.0
+offset_right = 1039.0
 offset_bottom = 267.0
-text = "HollowBorn : Vaults of the Forgotten"
+text = "𝓗𝓸𝓵𝓵𝓸𝔀𝓑𝓸𝓻𝓷: 𝓥𝓪𝓾𝓵𝓽𝓼 𝓸𝓯 𝓽𝓱𝓮 𝓕𝓸𝓻𝓰𝓸𝓽𝓽𝓮𝓷"
 label_settings = SubResource("LabelSettings_dvjd5")
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -51,32 +64,34 @@ layout_mode = 1
 anchors_preset = -1
 anchor_top = 1.0
 anchor_bottom = 1.0
-offset_left = 479.0
-offset_top = -265.0
-offset_right = 666.0
-offset_bottom = -94.0
+offset_left = 436.0
+offset_top = -303.0
+offset_right = 692.0
+offset_bottom = -83.0
 grow_vertical = 0
 
 [node name="Start" type="Button" parent="VBoxContainer"]
 layout_mode = 2
 focus_neighbor_top = NodePath("../Quit")
 theme = SubResource("Theme_3ryll")
-text = "START"
+text = "𝙎𝙏𝘼𝙍𝙏"
 script = ExtResource("2_hm0du")
 
-[node name="Options" type="Button" parent="VBoxContainer"]
+[node name="Settings" type="Button" parent="VBoxContainer"]
 layout_mode = 2
 theme = SubResource("Theme_78vtk")
-text = "OPTIONS"
+text = "𝙊𝙋𝙏𝙄𝙊𝙉𝙎"
 script = ExtResource("3_so5mo")
 
 [node name="Quit" type="Button" parent="VBoxContainer"]
 layout_mode = 2
 focus_neighbor_bottom = NodePath("../Start")
 theme = SubResource("Theme_ay84o")
-text = "QUIT"
+text = "𝙌𝙐𝙄𝙏
+"
 script = ExtResource("4_wcvsk")
 
 [connection signal="pressed" from="VBoxContainer/Start" to="." method="_on_start_pressed"]
-[connection signal="pressed" from="VBoxContainer/Options" to="." method="_on_options_pressed"]
+[connection signal="pressed" from="VBoxContainer/Settings" to="." method="_on_options_pressed"]
+[connection signal="pressed" from="VBoxContainer/Settings" to="." method="_on_settings_pressed"]
 [connection signal="pressed" from="VBoxContainer/Quit" to="." method="_on_quit_pressed"]
