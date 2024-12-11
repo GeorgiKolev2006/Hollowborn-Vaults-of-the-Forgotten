@@ -95,13 +95,14 @@ func create_collision():
 	$CollisionShape2D.disabled = false
 
 func _on_hitbox_area_entered(area):
+	take_damage()
 	flash()
 
 func take_damage():
 	if player_data.health > 0:
 		player_data.health -= 1
 		print("Player Health: ", player_data.health)
-		flash()  # Optional: Visual damage feedback
+		flash()
 		if player_data.health <= 0:
 			current_states = player_states.DEAD
 	else:
