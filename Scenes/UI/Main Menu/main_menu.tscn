@@ -1,9 +1,23 @@
-[gd_scene load_steps=5 format=3 uid="uid://cvgevlwsmtaoa"]
+[gd_scene load_steps=9 format=3 uid="uid://cvgevlwsmtaoa"]
 
 [ext_resource type="Script" path="res://Scenes/UI/Main Menu/main_menu.gd" id="1_es7kg"]
 [ext_resource type="Script" path="res://Scenes/UI/Main Menu/start.gd" id="2_hm0du"]
 [ext_resource type="Script" path="res://Scenes/UI/Main Menu/options.gd" id="3_so5mo"]
 [ext_resource type="Script" path="res://Scenes/UI/Main Menu/quit.gd" id="4_wcvsk"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_dvjd5"]
+font_size = 40
+font_color = Color(0.542885, 0.917038, 0.975609, 1)
+outline_size = 3
+outline_color = Color(0, 0, 0.00784314, 1)
+shadow_size = 10
+shadow_offset = Vector2(-5, -5)
+
+[sub_resource type="Theme" id="Theme_3ryll"]
+
+[sub_resource type="Theme" id="Theme_78vtk"]
+
+[sub_resource type="Theme" id="Theme_ay84o"]
 
 [node name="Main Menu" type="Control"]
 layout_mode = 3
@@ -14,30 +28,52 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_es7kg")
 
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 0
+offset_right = 1153.0
+offset_bottom = 645.0
+color = Color(0.176419, 0.176419, 0.176419, 1)
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 0
+offset_left = 202.0
+offset_top = 113.0
+offset_right = 993.0
+offset_bottom = 267.0
+text = "HollowBorn : Vaults of the Forgotten"
+label_settings = SubResource("LabelSettings_dvjd5")
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 1
 anchors_preset = -1
 anchor_top = 1.0
 anchor_bottom = 1.0
-offset_top = -122.0
-offset_right = 187.0
-offset_bottom = 49.0
+offset_left = 479.0
+offset_top = -265.0
+offset_right = 666.0
+offset_bottom = -94.0
 grow_vertical = 0
 
 [node name="Start" type="Button" parent="VBoxContainer"]
 layout_mode = 2
 focus_neighbor_top = NodePath("../Quit")
+theme = SubResource("Theme_3ryll")
 text = "START"
 script = ExtResource("2_hm0du")
 
 [node name="Options" type="Button" parent="VBoxContainer"]
 layout_mode = 2
+theme = SubResource("Theme_78vtk")
 text = "OPTIONS"
 script = ExtResource("3_so5mo")
 
 [node name="Quit" type="Button" parent="VBoxContainer"]
 layout_mode = 2
 focus_neighbor_bottom = NodePath("../Start")
+theme = SubResource("Theme_ay84o")
 text = "QUIT"
 script = ExtResource("4_wcvsk")
 
