@@ -110,12 +110,11 @@ func take_damage():
 
 
 func save_data():
-	# Use DirAccess to ensure the save directory exists
 	var dir_access = DirAccess.open(save_directory)
 	if dir_access == null:
 		print("Directory does not exist, creating it...")
 		var dir = DirAccess.open("user://")
-		dir.make_dir("save")  # Create the save directory manually
+		dir.make_dir("save")
 	else:
 		print("Directory exists!")
 	

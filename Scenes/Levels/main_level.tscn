@@ -1199,7 +1199,7 @@ position = Vector2(875, 148)
 texture = ExtResource("10_krdm8")
 
 [node name="coin" parent="." instance=ExtResource("5_uluf0")]
-position = Vector2(1029, 49)
+position = Vector2(1030, -48)
 
 [node name="GUI" type="CanvasLayer" parent="."]
 script = ExtResource("7_32oft")
