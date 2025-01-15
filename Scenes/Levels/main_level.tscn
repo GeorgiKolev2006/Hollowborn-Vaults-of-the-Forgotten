@@ -1128,9 +1128,7 @@ radius = 13.0384
 [node name="MainSC" type="Node2D"]
 y_sort_enabled = true
 
-[node name="follow_camera" parent="." node_paths=PackedStringArray("player", "tilemap") instance=ExtResource("3_vnsn3")]
-player = NodePath("../Player")
-tilemap = NodePath("../Ground")
+[node name="follow_camera" parent="." instance=ExtResource("3_vnsn3")]
 
 [node name="crate" parent="." instance=ExtResource("3_45t6w")]
 position = Vector2(407, 80)

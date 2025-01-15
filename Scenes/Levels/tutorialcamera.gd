@@ -1,7 +1,7 @@
 extends Camera2D
 
-@onready var player: CharacterBody2D = $Player
-@onready var tilemap: TileMap = get_node("Ground")  # Reference the Ground TileMap directly
+@onready var player: CharacterBody2D = get_node("../Player")
+@onready var tilemap: TileMap = get_node("../Ground")
 
 func _ready():
 	if not tilemap:
