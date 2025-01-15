@@ -1,6 +1,8 @@
 extends TabContainer
 
-@export var main_menu: Node
+@export var main_menu_vbox: Node
+@export var game_name: Node
+@export var settings: TabContainer
 
 func _ready():
 	reload_settings()
@@ -9,10 +11,14 @@ func _ready():
 func reload_settings():
 	pass
 
-func _on_back_pressed():
+func _on_back_pressed() -> void:
 	hide() 
-	if main_menu:
-		if main_menu.has_node("VBoxContainer"):
-			main_menu.get_node("VBoxContainer").show()
-		if main_menu.has_node("GameName"):
-			main_menu.get_node("GameName").show()
+	settings.hide()
+	if main_menu_vbox:
+		main_menu_vbox.show()
+	else:
+		print("Error: main_menu_vbox is null!")
+	if game_name:
+		game_name.show()
+	else:
+		print("Error: game_name is null!")

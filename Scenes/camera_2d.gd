@@ -4,6 +4,10 @@ extends Camera2D
 @export var tilemap: TileMap
 
 func _ready():
+	if not tilemap:
+		print("TileMap not assigned or missing!")
+	else:
+		print("TileMap assigned correctly: ", tilemap)
 	var tile_size = tilemap.tile_set.tile_size
 	var map_rect = tilemap.get_used_rect()
 	var world_size = map_rect.size * tile_size

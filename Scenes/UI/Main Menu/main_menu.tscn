@@ -1,10 +1,10 @@
-[gd_scene load_steps=13 format=3 uid="uid://cvgevlwsmtaoa"]
+[gd_scene load_steps=12 format=3 uid="uid://cvgevlwsmtaoa"]
 
+[ext_resource type="Script" path="res://Scenes/UI/Main Menu/main_menu.gd" id="1_yfx5c"]
 [ext_resource type="Texture2D" uid="uid://d2vprbcrsolf2" path="res://Scenes/UI/image_resized.png" id="2_82wyr"]
 [ext_resource type="Script" path="res://Scenes/UI/Main Menu/start.gd" id="2_hm0du"]
 [ext_resource type="Script" path="res://Scenes/UI/Main Menu/tutorial.gd" id="4_ob4sk"]
 [ext_resource type="Script" path="res://Scenes/UI/Main Menu/quit.gd" id="4_wcvsk"]
-[ext_resource type="Script" path="res://Scenes/UI/Main Menu/settings.gd" id="4_x4s5w"]
 [ext_resource type="PackedScene" uid="uid://dr7qlqu1llxvy" path="res://Scenes/UI/Main Menu/settings.tscn" id="6_hcm67"]
 [ext_resource type="Texture2D" uid="uid://cpvkqfi0sct75" path="res://Assets/cooltext473694033464554.png" id="7_apmm2"]
 
@@ -21,15 +21,6 @@ default_font_size = 30
 [sub_resource type="Theme" id="Theme_ay84o"]
 default_font_size = 30
 
-[sub_resource type="LabelSettings" id="LabelSettings_dvjd5"]
-font_size = 40
-font_color = Color(0.604945, 0.458148, 0.0797186, 1)
-outline_size = 8
-outline_color = Color(0, 0, 0.00784314, 1)
-shadow_size = 40
-shadow_color = Color(0.0831325, 0.32239, 0.475199, 0)
-shadow_offset = Vector2(-15, -15)
-
 [node name="Main Menu" type="Control"]
 layout_mode = 3
 anchor_right = 1.0
@@ -37,7 +28,7 @@ anchor_bottom = 1.136
 offset_bottom = 0.871948
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("4_x4s5w")
+script = ExtResource("1_yfx5c")
 
 [node name="BackGround" type="Panel" parent="."]
 layout_mode = 0
@@ -45,7 +36,7 @@ offset_right = 1152.0
 offset_bottom = 648.0
 theme_override_styles/panel = SubResource("StyleBoxTexture_dlf2e")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
+[node name="mainmenuvbox" type="VBoxContainer" parent="."]
 layout_mode = 1
 anchors_preset = -1
 anchor_top = 1.0
@@ -56,14 +47,14 @@ offset_right = 746.0
 offset_bottom = -150.0
 grow_vertical = 0
 
-[node name="Start" type="Button" parent="VBoxContainer"]
+[node name="Start" type="Button" parent="mainmenuvbox"]
 layout_mode = 2
 focus_neighbor_top = NodePath("../Quit")
 theme = SubResource("Theme_3ryll")
 text = "𝙋𝙇𝘼𝙔"
 script = ExtResource("2_hm0du")
 
-[node name="Tutorial" type="Button" parent="VBoxContainer"]
+[node name="Tutorial" type="Button" parent="mainmenuvbox"]
 layout_mode = 2
 focus_neighbor_top = NodePath("../Quit")
 theme = SubResource("Theme_3ryll")
@@ -71,12 +62,12 @@ text = "𝙏𝙐𝙏𝙊𝙍𝙄𝘼𝙇
 "
 script = ExtResource("4_ob4sk")
 
-[node name="Settings" type="Button" parent="VBoxContainer"]
+[node name="Settings" type="Button" parent="mainmenuvbox"]
 layout_mode = 2
 theme = SubResource("Theme_78vtk")
 text = "𝙊𝙋𝙏𝙄𝙊𝙉𝙎"
 
-[node name="Quit" type="Button" parent="VBoxContainer"]
+[node name="Quit" type="Button" parent="mainmenuvbox"]
 layout_mode = 2
 focus_neighbor_bottom = NodePath("../Start")
 theme = SubResource("Theme_ay84o")
@@ -84,30 +75,21 @@ text = "𝙌𝙐𝙄𝙏
 "
 script = ExtResource("4_wcvsk")
 
-[node name="Label" type="Label" parent="."]
+[node name="settings" parent="." node_paths=PackedStringArray("main_menu_vbox", "game_name", "settings") instance=ExtResource("6_hcm67")]
 visible = false
-layout_mode = 0
-offset_left = 202.0
-offset_top = 63.0
-offset_right = 950.0
-offset_bottom = 243.0
-text = "𝓗𝓸𝓵𝓵𝓸𝔀𝓑𝓸𝓻𝓷: 𝓥𝓪𝓾𝓵𝓽𝓼 𝓸𝓯 𝓽𝓱𝓮 𝓕𝓸𝓻𝓰𝓸𝓽𝓽𝓮𝓷"
-label_settings = SubResource("LabelSettings_dvjd5")
-horizontal_alignment = 1
-vertical_alignment = 1
-autowrap_mode = 3
-
-[node name="settings" parent="." instance=ExtResource("6_hcm67")]
 layout_mode = 1
 offset_bottom = -90.0
+main_menu_vbox = NodePath("../mainmenuvbox")
+game_name = NodePath("../GameName")
+settings = NodePath(".")
 
 [node name="GameName" type="Sprite2D" parent="."]
 position = Vector2(593, 194.5)
 scale = Vector2(0.697639, 1.11702)
 texture = ExtResource("7_apmm2")
 
-[connection signal="pressed" from="VBoxContainer/Start" to="." method="_on_start_pressed"]
-[connection signal="pressed" from="VBoxContainer/Tutorial" to="." method="_on_start_pressed"]
-[connection signal="pressed" from="VBoxContainer/Settings" to="." method="_on_settings_pressed"]
-[connection signal="pressed" from="VBoxContainer/Settings" to="." method="_on_options_pressed"]
-[connection signal="pressed" from="VBoxContainer/Quit" to="." method="_on_quit_pressed"]
+[connection signal="pressed" from="mainmenuvbox/Start" to="." method="_on_start_pressed"]
+[connection signal="pressed" from="mainmenuvbox/Tutorial" to="." method="_on_tutorial_pressed"]
+[connection signal="pressed" from="mainmenuvbox/Settings" to="." method="_on_options_pressed"]
+[connection signal="pressed" from="mainmenuvbox/Settings" to="." method="_on_settings_pressed"]
+[connection signal="pressed" from="mainmenuvbox/Quit" to="." method="_on_quit_pressed"]

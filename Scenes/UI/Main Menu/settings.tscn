@@ -1,4 +1,6 @@
-[gd_scene format=3 uid="uid://dr7qlqu1llxvy"]
+[gd_scene load_steps=2 format=3 uid="uid://dr7qlqu1llxvy"]
+
+[ext_resource type="Script" path="res://Scenes/UI/Main Menu/settings.gd" id="1_jsj3b"]
 
 [node name="settings" type="TabContainer"]
 anchors_preset = 15
@@ -8,6 +10,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_font_sizes/font_size = 16
 current_tab = 0
+script = ExtResource("1_jsj3b")
 
 [node name="Video" type="TabBar" parent="."]
 layout_mode = 2
