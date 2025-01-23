@@ -4,13 +4,8 @@ extends CharacterBody2D
 @onready var anim_state = anim_tree.get("parameters/playback")
 @onready var coin_scene = preload("res://Scenes/Interactables/coin.tscn")
 
-var save_directory = "user://save/"
-var save_file_name = "PlayerSave.save"
-var save_file_path = save_directory + save_file_name
-
 enum player_states {MOVE, SWORD, JUMP, DEAD}
 var current_states = player_states.MOVE
-
 
 var input_movement = Vector2.ZERO
 var playerData = Player_data.new()
@@ -18,16 +13,26 @@ var playerData = Player_data.new()
 func _ready():
 	$sword.add_to_group("Sword")
 	$sword/CollisionShape2D.disabled = true
-	load_data()
-	
+	FireBase.load_game()
+	if PlayerData.SavePos != Vector2.ZERO:
+		print("🔄 Applying loaded position:", PlayerData.SavePos)
+		call_deferred("set_position", PlayerData.SavePos)  # Ensures position updates correctly
+
 
 func _process(delta):
-	if Input.is_action_just_pressed("save"):  
-		save_data()
-	if Input.is_action_just_pressed("load"):
-		load_data()
-	if Input.is_action_just_pressed("deletesave"):
-		print("F7 pressed!")
+	if Input.is_action_just_pressed("save_game"):
+		print("F5 pressed: Saving game...")
+		FireBase.save_game()
+	if Input.is_action_just_pressed("load_game"):
+		print("🔄 F6 Pressed! Loading game...")
+		FireBase.load_game()
+		await get_tree().create_timer(0.5).timeout 
+		print("📌 Applying position after load:", PlayerData.SavePos)
+		position = PlayerData.SavePos  
+	if Input.is_action_just_pressed("delete_game"):  # F7
+		print("F7 pressed: Deleting game...")
+		FireBase.delete_game()
+
 
 func _physics_process(delta):
 	match current_states:
@@ -82,6 +87,8 @@ func dead():
 	await get_tree().create_timer(1).timeout
 	player_data.health = 4
 	get_tree().reload_current_scene()
+	Firebase.save_game()
+	get_tree().reload_current_scene()
 
 func flash():
 	$Sprite2D.material.set_shader_parameter("flash_modifier", 0.7)
@@ -107,85 +114,3 @@ func take_damage():
 			current_states = player_states.DEAD
 	else:
 		print("Player is already dead!")
-
-
-func save_data():
-	var dir_access = DirAccess.open(save_directory)
-	if dir_access == null:
-		print("Directory does not exist, creating it...")
-		var dir = DirAccess.open("user://")
-		dir.make_dir("save")
-	else:
-		print("Directory exists!")
-	
-	# Save data to the file
-	var save_file = FileAccess.open(save_file_path, FileAccess.WRITE)
-	if save_file == null:
-		print("Failed to open file for saving.")
-		return
-	else:
-		print("File opened for saving.")
-	
-	var data_to_save = {
-		"position": position,
-		"health": player_data.health,
-		"coin": player_data.coin
-	}
-	print("Saving data: ", data_to_save)
-	save_file.store_var(data_to_save)
-	save_file.close()
-	print("File saved and closed.")
-
-
-func delete_save():
-	if Input.is_action_just_pressed("deletesave"):
-		print("F7 pressed!")
-
-		var file_path = save_file_path + save_file_name
-		print("File Path: ", file_path)  # Debug log for the file path
-
-		var dir = DirAccess.open("user://")
-		if dir:
-			print("Directory opened successfully!")  # Debug log for successful directory access
-			
-			if dir.file_exists(file_path):
-				print("File exists: ", file_path)  # Debug log for file existence check
-				var err = dir.remove(file_path)
-				if err == OK:
-					print("Save file deleted successfully.")
-				else:
-					print("Error deleting file:", err)
-			else:
-				print("No save file found to delete.")
-		else:
-			print("Failed to open directory.")
-
-
-
-func load_data():
-	var loaded_data = FileAccess.open(save_file_path, FileAccess.READ)
-	if loaded_data == null:
-		print("Failed to open file for loading.")
-		return
-	else:
-		print("File opened for loading.")
-	
-	var data = loaded_data.get_var()
-	print("Loaded data: ", data)
-	
-	if data:
-		position = data["position"]
-		player_data.health = data["health"]
-		player_data.coin = data["coin"]
-		print("Game data loaded successfully.")
-	else:
-		print("No data to load.")
-	
-	loaded_data.close()
-	print("File loaded and closed.")
-
-
-func apply_loaded_data():
-	position = playerData.SavePos
-	playerData.health = playerData.health
-	playerData.coin = playerData.coin

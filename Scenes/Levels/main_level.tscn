@@ -1228,6 +1228,12 @@ offset_right = 193.0
 offset_bottom = 97.0
 theme_override_font_sizes/font_size = 20
 
+[node name="score" type="Label" parent="GUI"]
+offset_left = 32.0
+offset_top = 97.0
+offset_right = 98.0
+offset_bottom = 120.0
+
 [node name="enemy_stoner" parent="." instance=ExtResource("11_6ipuy")]
 position = Vector2(151, 165)
 
@@ -1237,7 +1243,7 @@ position = Vector2(173, 91)
 [node name="enemy_stoner3" parent="." instance=ExtResource("11_6ipuy")]
 position = Vector2(187, 241)
 
-[node name="Player" type="CharacterBody2D" parent="."]
+[node name="Player" type="CharacterBody2D" parent="." groups=["Player"]]
 y_sort_enabled = true
 position = Vector2(780, 169)
 script = ExtResource("1_p6bv2")

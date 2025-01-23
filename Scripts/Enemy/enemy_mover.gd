@@ -93,6 +93,8 @@ func chase_player():
 func dead():
 	dead_animation()
 	queue_free()
+	PlayerData.score += 50
+	PlayerData.save_to_firebase()
 
 func dead_animation():
 	var dead = dead_anim.instantiate()
