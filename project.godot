@@ -15,11 +15,17 @@ run/main_scene="res://Scenes/UI/Main Menu/main_menu.tscn"
 config/features=PackedStringArray("4.3", "C#", "Forward Plus")
 config/icon="res://Assets/Icons/icon.svg"
 
+[audio]
+
+buses/default_bus_layout="res://Scripts/audiobuss/default_bus_layout.tres"
+
 [autoload]
 
 Firebase="*res://addons/godot-firebase/firebase/firebase.tscn"
 PlayerData="*res://Scripts/Player/player_data.gd"
 FireBase="*res://Scenes/Firebase/firebase_test.gd"
+UtilitiesData="*res://Scripts/Settings/Utilities.gd"
+AudioManager="*res://Scripts/Settings/audio_manager.gd"
 
 [display]
 

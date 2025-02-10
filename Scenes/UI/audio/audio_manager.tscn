@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://cxrfy8g1eqwa6"]
+
+[ext_resource type="Script" path="res://Scripts/Settings/audio_manager.gd" id="1_fnb8m"]
+[ext_resource type="AudioStream" uid="uid://bblg6gpjjf3p0" path="res://Assets/Sound/ambientmain_0.ogg" id="2_rs2ng"]
+
+[node name="AudioManager" type="Node"]
+script = ExtResource("1_fnb8m")
+
+[node name="MusicPlayer" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("2_rs2ng")
+autoplay = true
+bus = &"Music"
+playback_type = 1
+
+[node name="SoundPlayer" type="AudioStreamPlayer2D" parent="."]

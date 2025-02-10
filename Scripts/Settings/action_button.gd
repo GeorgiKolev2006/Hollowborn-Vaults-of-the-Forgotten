@@ -1,31 +1,38 @@
 extends Button
 class_name RemapButton
 
-@export var action: String = "Up"
+@export var action: String = "Up"  # Change this for each keybind button (Up, Down, Left, Right)
 
-func _init():
-	toggle_mode = true
+var awaiting_input = false
 
 func _ready():
-	set_process_unhandled_input(false)
+	toggle_mode = true
 	display_key()
 
-func _toggled(_button_pressed):
-	set_process_unhandled_input(_button_pressed)
-	if _button_pressed:
-		text = "press any key"
-		release_focus()
+func _toggled(button_pressed):
+	if button_pressed:
+		awaiting_input = true
+		text = "Press any key..."
 	else:
+		awaiting_input = false
 		display_key()
-		grab_focus()
 
 func _unhandled_input(event):
-	if event.pressed:
+	if awaiting_input and event is InputEventKey and event.pressed:
 		InputMap.action_erase_events(action)
 		InputMap.action_add_event(action, event)
 		button_pressed = false
-		Utilities.config.set_value("Controls", action, event)
-		Utilities.save_data()
+		awaiting_input = false
+		
+		# Save the new keybind
+		UtilitiesData.config.set_value("Controls", action, event)
+		UtilitiesData.save_data()
+
+		display_key()
 
 func display_key():
-	text = InputMap.action_get_events(action)[0].as_text()
+	var events = InputMap.action_get_events(action)
+	if events.size() > 0:
+		text = events[0].as_text()
+	else:
+		text = "Unbound"
