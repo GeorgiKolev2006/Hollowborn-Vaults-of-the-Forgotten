@@ -1,0 +1,20 @@
+[gd_scene load_steps=3 format=3 uid="uid://xpbt5q4mhnjq"]
+
+[ext_resource type="Script" path="res://Scripts/Interactables/chest.gd" id="1_5guky"]
+[ext_resource type="Texture2D" uid="uid://qpxyf53kdd3y" path="res://Assets/chest/15_Ready_to_use_Treasure_Chests_Spritesheet.png" id="2_y7xvl"]
+
+[node name="chest" type="StaticBody2D"]
+script = ExtResource("1_5guky")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_y7xvl")
+hframes = 21
+vframes = 12
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+
+[node name="anim" type="AnimationPlayer" parent="."]
+
+[node name="hitbox" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="hitbox"]
