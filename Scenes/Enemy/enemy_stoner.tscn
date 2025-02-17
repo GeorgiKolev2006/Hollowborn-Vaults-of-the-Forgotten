@@ -103,7 +103,7 @@ _data = {
 }
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_mlwh5"]
-radius = 12.3693
+radius = 11.0454
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ji8wv"]
 radius = 14.0
@@ -148,6 +148,8 @@ debug_color = Color(0.870588, 0.0509804, 0, 0.419608)
 [node name="CollisionShape2D" type="CollisionShape2D" parent="EnemyAttack"]
 shape = SubResource("CapsuleShape2D_5hjgv")
 debug_color = Color(0, 0, 0, 0.42)
+
+[node name="StuckTimer" type="Timer" parent="."]
 
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
 [connection signal="area_entered" from="EnemyHitbox" to="." method="_on_enemy_hitbox_area_entered"]

@@ -1495,6 +1495,9 @@ label_settings = SubResource("LabelSettings_e02ou")
 
 [node name="tutorialcamera" type="Camera2D" parent="."]
 zoom = Vector2(2.25, 2.25)
+position_smoothing_enabled = true
+position_smoothing_speed = 10.0
+rotation_smoothing_speed = 10.0
 script = ExtResource("10_8c68s")
 
 [node name="crate" parent="." instance=ExtResource("11_8hbry")]

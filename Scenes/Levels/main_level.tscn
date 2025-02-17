@@ -228,7 +228,7 @@ texture = ExtResource("7_kke3r")
 3:1/0 = 0
 3:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(6.625, 8, 3.125, 8, 3.125, 1.125, 8, 1, 8, 4.75, 6.5, 4.75)
 4:1/0 = 0
-4:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, -8, 6.125, 8, 6.10938, 8, 1, -3, 1.125, -2.875, -8)
+4:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, -8, 6, 8, 6.10938, 8, 1, -3, 1.125, -2.875, -8)
 5:1/0 = 0
 5:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, 6.20313, 8, 6.23438, 8, -8, 3.125, -8, 3.125, 0.875, -8, 1)
 6:1/0 = 0
@@ -1131,6 +1131,7 @@ radius = 13.0384
 y_sort_enabled = true
 
 [node name="follow_camera" parent="." instance=ExtResource("3_vnsn3")]
+position_smoothing_speed = 3.0
 
 [node name="crate" parent="." instance=ExtResource("3_45t6w")]
 position = Vector2(407, 80)
@@ -1199,7 +1200,7 @@ position = Vector2(875, 148)
 texture = ExtResource("10_krdm8")
 
 [node name="coin" parent="." instance=ExtResource("5_uluf0")]
-position = Vector2(1030, -48)
+position = Vector2(710, 171)
 
 [node name="GUI" type="CanvasLayer" parent="."]
 script = ExtResource("7_32oft")

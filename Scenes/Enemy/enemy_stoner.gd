@@ -11,10 +11,15 @@ func _on_timer_timeout():
 
 
 func _on_enemy_hitbox_area_entered(area: Area2D):
-	if area.is_in_group("Sword"):
+	if area.is_in_group("Sword") and can_take_damage:
 		health -= 1
 		flash()
-		print("Enemy Health: ",health)
+		print("Enemy Health: ", health)
+		var knockback_direction = (global_position - area.global_position).normalized()
+		apply_knockback(knockback_direction * 150)
+		can_take_damage = false
+		await get_tree().create_timer(damage_cooldown).timeout
+		can_take_damage = true  # Allow damage again after cooldown
 		if health <= 0:
 			dead()
 
