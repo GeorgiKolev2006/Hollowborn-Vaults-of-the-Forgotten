@@ -965,7 +965,7 @@ _data = {
 }
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_a4kde"]
-size = Vector2(13, 6)
+size = Vector2(15, 8)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1p4wi"]
 size = Vector2(23, 30.875)
@@ -1261,7 +1261,7 @@ libraries = {
 }
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
-position = Vector2(-0.5, 13)
+position = Vector2(-0.5, 12)
 shape = SubResource("RectangleShape2D_a4kde")
 
 [node name="sword" type="Area2D" parent="Player" groups=["Sword"]]
@@ -1285,7 +1285,7 @@ parameters/Walk/blend_position = Vector2(0, 0)
 collision_layer = 8
 collision_mask = 4
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Player/hitbox"]
+[node name="hitboxCharacter" type="CollisionShape2D" parent="Player/hitbox"]
 shape = SubResource("CircleShape2D_v8wjo")
 debug_color = Color(0.405765, 0.0066508, 0.058604, 0.42)
 

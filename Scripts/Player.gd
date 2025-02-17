@@ -4,7 +4,7 @@ extends CharacterBody2D
 @onready var anim_state = anim_tree.get("parameters/playback")
 @onready var coin_scene = preload("res://Scenes/Interactables/coin.tscn")
 @onready var enemyVelocity = preload("res://Scripts/Enemy/enemy_mover.gd")
-
+var hitbox_node
 @export var knockbackPower: int = 500
 enum player_states {MOVE, SWORD, JUMP, DEAD}
 var current_states = player_states.MOVE
@@ -14,6 +14,7 @@ var playerData = Player_data.new()
 func _ready():
 	$sword.add_to_group("Sword")
 	$sword/CollisionShape2D.disabled = true
+	hitbox_node = get_node_or_null("hitbox/hitboxCharacter")
 	FireBase.load_game()
 	if PlayerData.SavePos != Vector2.ZERO:
 		print("🔄 Applying loaded position:", PlayerData.SavePos)
@@ -78,8 +79,14 @@ func on_states_reset():
 
 func jump():
 	anim_state.travel("Jump")
-	velocity = input_movement * playerData.Playerspeed
+	var dodge_speed = playerData.Playerspeed * 1.5
+	velocity = input_movement * dodge_speed
+	clear_collision()
 	move_and_slide()
+	await get_tree().create_timer(0.5).timeout 
+	velocity = input_movement * playerData.Playerspeed  
+	create_collision()
+	on_states_reset()
 
 func dead():
 	anim_state.travel("Dead")
@@ -95,10 +102,14 @@ func flash():
 	$Sprite2D.material.set_shader_parameter("flash_modifier", 0)
 
 func clear_collision():
-	$CollisionShape2D.disabled = true
+	var hitbox_node = get_node_or_null("hitbox/hitboxCharacter")
+	if hitbox_node:
+		hitbox_node.disabled = true
+	else:
+		print("ERROR: hitboxCharacter not found!")
 
 func create_collision():
-	$CollisionShape2D.disabled = false
+	$hitbox/hitboxCharacter.disabled = false
 
 func _on_hitbox_area_entered(area):
 	var enemy = area.get_parent()

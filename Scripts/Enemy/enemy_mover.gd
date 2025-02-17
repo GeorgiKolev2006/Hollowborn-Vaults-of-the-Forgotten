@@ -117,8 +117,7 @@ func avoid_obstacles():
 
 func _on_stuck_timeout():
 	current_states = enemy_states.AVOIDING
-	print("Switching to AVOIDING state")  # Debug information
-
+	print("Switching to AVOIDING state") 
 func dead():
 	dead_animation()
 	queue_free()
