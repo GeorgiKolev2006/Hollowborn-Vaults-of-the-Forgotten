@@ -5,6 +5,7 @@ extends CharacterBody2D
 @onready var coin_scene = preload("res://Scenes/Interactables/coin.tscn")
 @onready var enemyVelocity = preload("res://Scripts/Enemy/enemy_mover.gd")
 var hitbox_node
+var can_damage = true
 @export var knockbackPower: int = 500
 enum player_states {MOVE, SWORD, JUMP, DEAD}
 var current_states = player_states.MOVE
@@ -12,8 +13,8 @@ var input_movement = Vector2.ZERO
 var playerData = Player_data.new()
 
 func _ready():
-	$sword.add_to_group("Sword")
 	$sword/CollisionShape2D.disabled = true
+	$sword.add_to_group("Sword")
 	hitbox_node = get_node_or_null("hitbox/hitboxCharacter")
 	FireBase.load_game()
 	if PlayerData.SavePos != Vector2.ZERO:
@@ -21,6 +22,7 @@ func _ready():
 		call_deferred("set_position", PlayerData.SavePos)  # Ensures position updates correctly
 
 func _process(delta):
+
 	if Input.is_action_just_pressed("save_game"):
 		print("F5 pressed: Saving game...")
 		FireBase.save_game()
@@ -68,7 +70,8 @@ func move():
 	
 	if player_data.health <= 0:
 		current_states = player_states.DEAD
-	
+
+
 	move_and_slide()
 
 func sword():

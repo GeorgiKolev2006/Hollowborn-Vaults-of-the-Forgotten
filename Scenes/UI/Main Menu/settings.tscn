@@ -1,8 +1,10 @@
-[gd_scene load_steps=4 format=3 uid="uid://dr7qlqu1llxvy"]
+[gd_scene load_steps=6 format=3 uid="uid://dr7qlqu1llxvy"]
 
 [ext_resource type="Script" path="res://Scenes/UI/Main Menu/settings.gd" id="1_jsj3b"]
 [ext_resource type="Script" path="res://Scripts/Settings/video.gd" id="2_dko64"]
 [ext_resource type="Script" path="res://Scripts/Settings/audio.gd" id="3_y7ant"]
+[ext_resource type="Script" path="res://Scenes/UI/Main Menu/controls.gd" id="4_m5567"]
+[ext_resource type="PackedScene" uid="uid://n38aed1nvocc" path="res://Scenes/UI/input_button.tscn" id="5_hn1ac"]
 
 [node name="settings" type="TabContainer"]
 anchors_preset = 15
@@ -11,10 +13,11 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_font_sizes/font_size = 16
-current_tab = 0
+current_tab = 2
 script = ExtResource("1_jsj3b")
 
 [node name="Video" type="TabBar" parent="."]
+visible = false
 layout_mode = 2
 focus_neighbor_left = NodePath("../Controls")
 focus_neighbor_right = NodePath("../Audio")
@@ -72,6 +75,19 @@ size_flags_vertical = 6
 focus_neighbor_top = NodePath("../../..")
 focus_neighbor_bottom = NodePath("../Borderless")
 focus_next = NodePath("../Borderless")
+theme_override_colors/font_disabled_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_color = Color(0, 0, 0, 1)
+theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/font_focus_color = Color(0, 0, 0, 1)
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_colors/icon_normal_color = Color(0, 0, 0, 1)
+theme_override_colors/icon_focus_color = Color(0, 0, 0, 1)
+theme_override_colors/icon_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/icon_hover_color = Color(0, 0, 0, 1)
+theme_override_colors/icon_hover_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/icon_disabled_color = Color(0, 0, 0, 1)
 
 [node name="Borderless" type="CheckBox" parent="Video/HBoxContainer/VBoxContainer2"]
 layout_mode = 2
@@ -222,73 +238,12 @@ theme_override_font_sizes/font_size = 24
 text = "Back"
 
 [node name="Controls" type="TabBar" parent="."]
-visible = false
 layout_mode = 2
 focus_neighbor_left = NodePath("../Audio")
 focus_neighbor_right = NodePath("../Video")
 theme_override_font_sizes/font_size = 20
+script = ExtResource("4_m5567")
 metadata/_tab_index = 2
-
-[node name="HBoxContainer" type="HBoxContainer" parent="Controls"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -159.0
-offset_top = -125.5
-offset_right = 147.0
-offset_bottom = 134.5
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="VBoxContainer" type="VBoxContainer" parent="Controls/HBoxContainer"]
-layout_mode = 2
-
-[node name="Up" type="Label" parent="Controls/HBoxContainer/VBoxContainer"]
-custom_minimum_size = Vector2(100, 0)
-layout_mode = 2
-size_flags_vertical = 6
-theme_override_font_sizes/font_size = 24
-text = "Up
-"
-
-[node name="Down" type="Label" parent="Controls/HBoxContainer/VBoxContainer"]
-custom_minimum_size = Vector2(100, 0)
-layout_mode = 2
-size_flags_vertical = 6
-theme_override_font_sizes/font_size = 24
-text = "Down"
-
-[node name="Left" type="Label" parent="Controls/HBoxContainer/VBoxContainer"]
-custom_minimum_size = Vector2(100, 0)
-layout_mode = 2
-size_flags_vertical = 6
-theme_override_font_sizes/font_size = 24
-text = "Left"
-
-[node name="Right" type="Label" parent="Controls/HBoxContainer/VBoxContainer"]
-custom_minimum_size = Vector2(100, 0)
-layout_mode = 2
-size_flags_vertical = 6
-theme_override_font_sizes/font_size = 24
-text = "Right"
-
-[node name="Jump" type="Label" parent="Controls/HBoxContainer/VBoxContainer"]
-custom_minimum_size = Vector2(100, 0)
-layout_mode = 2
-size_flags_vertical = 6
-theme_override_font_sizes/font_size = 24
-text = "Jump
-"
-
-[node name="Attack" type="Label" parent="Controls/HBoxContainer/VBoxContainer"]
-custom_minimum_size = Vector2(100, 0)
-layout_mode = 2
-size_flags_vertical = 6
-theme_override_font_sizes/font_size = 24
-text = "Attack"
 
 [node name="Back" type="Button" parent="Controls"]
 custom_minimum_size = Vector2(100, 0)
@@ -307,6 +262,58 @@ grow_vertical = 0
 theme_override_font_sizes/font_size = 24
 text = "Back"
 
+[node name="PanelContainer" type="PanelContainer" parent="Controls"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -540.0
+offset_top = -274.5
+offset_right = 540.0
+offset_bottom = 234.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="Controls/PanelContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Controls/PanelContainer/MarginContainer"]
+layout_mode = 2
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Controls/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="ActionList" type="VBoxContainer" parent="Controls/PanelContainer/MarginContainer/VBoxContainer/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="InputButton" parent="Controls/PanelContainer/MarginContainer/VBoxContainer/ScrollContainer/ActionList" instance=ExtResource("5_hn1ac")]
+layout_mode = 2
+
+[node name="Reset" type="Button" parent="Controls"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -234.0
+offset_top = -59.0
+offset_right = -134.0
+offset_bottom = -17.0
+grow_horizontal = 0
+grow_vertical = 0
+focus_mode = 0
+theme_override_font_sizes/font_size = 24
+text = "Default"
+
 [connection signal="toggled" from="Video/HBoxContainer/VBoxContainer2/Fullscreen" to="Video" method="_on_fullscreen_toggled"]
 [connection signal="toggled" from="Video/HBoxContainer/VBoxContainer2/Borderless" to="Video" method="_on_borderless_toggled"]
 [connection signal="item_selected" from="Video/HBoxContainer/VBoxContainer2/Vsync" to="Video" method="_on_vsync_item_selected"]
@@ -316,3 +323,4 @@ text = "Back"
 [connection signal="value_changed" from="Audio/HBoxContainer/VBoxContainer2/SoundEffects" to="Audio" method="_on_sound_effects_value_changed"]
 [connection signal="pressed" from="Audio/Back" to="." method="_on_back_pressed"]
 [connection signal="pressed" from="Controls/Back" to="." method="_on_back_pressed"]
+[connection signal="pressed" from="Controls/Reset" to="Controls" method="_on_reset_pressed"]
