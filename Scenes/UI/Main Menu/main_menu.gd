@@ -3,12 +3,14 @@ extends Control
 @onready var settings: TabContainer = $settings
 @onready var main_menu_vbox = $mainmenuvbox
 @onready var game_name = $GameName
+@onready var charct = $CharacterMenu
+
+
 
 func _ready() -> void:
-	main_menu_vbox.grab_focus()  
+	main_menu_vbox.grab_focus()
 
 func _on_options_pressed() -> void:
-
 	main_menu_vbox.hide()
 	game_name.hide()
 	settings.show()
@@ -23,7 +25,8 @@ func _on_back_pressed() -> void:
 	game_name.show()
 
 func _on_start_pressed() -> void:
-	get_tree().change_scene_to_file("res://Scenes/Levels/main_level.tscn")
+	get_tree().change_scene_to_file("res://Scenes/GUI/CharacterMenu.tscn")
+#get_tree().change_scene_to_file("res://Scenes/Levels/main_level.tscn")
 
 func _on_quit_pressed() -> void:
 	get_tree().quit()

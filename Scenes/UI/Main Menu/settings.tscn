@@ -314,12 +314,18 @@ focus_mode = 0
 theme_override_font_sizes/font_size = 24
 text = "Default"
 
+[connection signal="toggled" from="Video/HBoxContainer/VBoxContainer2/Fullscreen" to="." method="_on_fullscreen_toggled"]
 [connection signal="toggled" from="Video/HBoxContainer/VBoxContainer2/Fullscreen" to="Video" method="_on_fullscreen_toggled"]
+[connection signal="toggled" from="Video/HBoxContainer/VBoxContainer2/Borderless" to="." method="_on_borderless_toggled"]
 [connection signal="toggled" from="Video/HBoxContainer/VBoxContainer2/Borderless" to="Video" method="_on_borderless_toggled"]
+[connection signal="item_selected" from="Video/HBoxContainer/VBoxContainer2/Vsync" to="." method="_on_vsync_item_selected"]
 [connection signal="item_selected" from="Video/HBoxContainer/VBoxContainer2/Vsync" to="Video" method="_on_vsync_item_selected"]
 [connection signal="pressed" from="Video/Back" to="." method="_on_back_pressed"]
+[connection signal="drag_ended" from="Audio/HBoxContainer/VBoxContainer2/Master" to="." method="_on_master_drag_ended"]
 [connection signal="value_changed" from="Audio/HBoxContainer/VBoxContainer2/Master" to="Audio" method="_on_master_value_changed"]
+[connection signal="drag_ended" from="Audio/HBoxContainer/VBoxContainer2/Music" to="." method="_on_music_drag_ended"]
 [connection signal="value_changed" from="Audio/HBoxContainer/VBoxContainer2/Music" to="Audio" method="_on_music_value_changed"]
+[connection signal="drag_ended" from="Audio/HBoxContainer/VBoxContainer2/SoundEffects" to="." method="_on_sound_effects_drag_ended"]
 [connection signal="value_changed" from="Audio/HBoxContainer/VBoxContainer2/SoundEffects" to="Audio" method="_on_sound_effects_value_changed"]
 [connection signal="pressed" from="Audio/Back" to="." method="_on_back_pressed"]
 [connection signal="pressed" from="Controls/Back" to="." method="_on_back_pressed"]

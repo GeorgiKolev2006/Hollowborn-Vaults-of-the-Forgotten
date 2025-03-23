@@ -26,6 +26,7 @@ PlayerData="*res://Scripts/Player/player_data.gd"
 FireBase="*res://Scenes/Firebase/firebase_test.gd"
 UtilitiesData="*res://Scripts/Settings/Utilities.gd"
 AudioManager="*res://Scripts/Settings/audio_manager.gd"
+ConfigFileHandler="*res://Scripts/Menus/ConfigFileHandler.gd"
 
 [display]
 

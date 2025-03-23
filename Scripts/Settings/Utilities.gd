@@ -1,6 +1,5 @@
 extends Node
 
-# Scene manager
 @export var scenes: Array[PackedScene] = []
 @export var scene_map: Dictionary = {}
 @export var is_persistence: bool = false

@@ -76,13 +76,10 @@ text = "𝙌𝙐𝙄𝙏
 "
 script = ExtResource("4_wcvsk")
 
-[node name="settings" parent="." node_paths=PackedStringArray("main_menu_vbox", "game_name", "settings") instance=ExtResource("6_hcm67")]
+[node name="settings" parent="." instance=ExtResource("6_hcm67")]
 visible = false
 layout_mode = 1
 offset_bottom = -90.0
-main_menu_vbox = NodePath("../mainmenuvbox")
-game_name = NodePath("../GameName")
-settings = NodePath(".")
 
 [node name="GameName" type="Sprite2D" parent="."]
 position = Vector2(593, 194.5)

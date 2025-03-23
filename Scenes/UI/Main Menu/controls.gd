@@ -1,7 +1,7 @@
 extends TabBar
+
 @onready var input_button_scene = preload("res://Scenes/UI/input_button.tscn")
 @onready var action_list = $PanelContainer/MarginContainer/VBoxContainer/ScrollContainer/ActionList
-
 
 var is_remapping = false
 var action_to_remap = null
@@ -19,12 +19,19 @@ var input_actions = {
 	"delete_game": "Delete Game"
 }
 
-
 func ready_():
+	_load_keybindings_from_settings()
 	_create_action_list()
 
+
+func _load_keybindings_from_settings():
+	var keybindings = ConfigFileHandler.load_keybindings()
+	for action in keybindings.keys():
+		InputMap.action_erase_events(action)
+		InputMap.action_add_event(action, keybindings[action])
+
+
 func _create_action_list():
-	InputMap.load_from_project_settings()
 	for item in action_list.get_children():
 		item.queue_free()
 
@@ -53,14 +60,11 @@ func _on_input_button_pressed(button, action):
 
 func _input(event):
 	if is_remapping:
-		if (
-			event is InputEventKey ||
-			(event is InputEventMouseButton && event.pressed)
-		):
+		if event is InputEventKey || (event is InputEventMouseButton && event.pressed):
 			InputMap.action_erase_events(action_to_remap)
 			InputMap.action_add_event(action_to_remap, event)
+			ConfigFileHandler.save_keybinding(action_to_remap, event)
 			_update_action_list(remapping_button, event)
-			
 			
 			is_remapping = false
 			action_to_remap = null
@@ -68,9 +72,13 @@ func _input(event):
 			
 			accept_event()
 
-
 func _update_action_list(button, event):
 	button.find_child("LabelInput").text = event.as_text().trim_suffix(" (Physical)")
 
 func _on_reset_pressed() -> void:
+	InputMap.load_from_project_settings()
+	for action in input_actions:
+		var events = InputMap.action_get_events(action)
+		if events.size() > 0:
+			ConfigFileHandler.save_keybinding(action, events[0])
 	_create_action_list()
