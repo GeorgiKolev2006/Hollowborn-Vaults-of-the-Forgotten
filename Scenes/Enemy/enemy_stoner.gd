@@ -43,8 +43,8 @@ func flash():
 		 #print("Player is dead!")
 
 func damage_player():
-	if player and player.has_method("take_damage"):  # Check if the player reference exists and has take_damage
-		player.take_damage()  # Call the player's take_damage function
+	if player and player.has_method("take_damage"):
+		player.take_damage(Vector2.ZERO)  # Or use enemy velocity if available
 		print("Player damaged!")
 	else:
 		print("Error: Player is not valid or does not have a take_damage method!")

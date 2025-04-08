@@ -1,0 +1,137 @@
+[gd_scene load_steps=13 format=3 uid="uid://drrek3qk6b1k8"]
+
+[ext_resource type="Texture2D" uid="uid://6dn5pxruqxdb" path="res://Assets/enemies/mage/Human Mage/4_Ancient/[Ancient] MiniMage.png" id="1_1hlow"]
+[ext_resource type="Script" path="res://Scripts/Enemy/ranger.gd" id="1_c5v25"]
+[ext_resource type="PackedScene" uid="uid://dspn3exbyhjo1" path="res://Scenes/Enemy/fireball.tscn" id="2_lalqf"]
+[ext_resource type="Shader" path="res://Scenes/Shaders/hurt.gdshader" id="3_uupny"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_fh3pn"]
+shader = ExtResource("3_uupny")
+shader_parameter/flash_color = Color(1, 0, 0, 1)
+shader_parameter/flash_modifier = 0.0
+
+[sub_resource type="Animation" id="Animation_ef8ed"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [36]
+}
+
+[sub_resource type="Animation" id="Animation_fapy7"]
+resource_name = "dead"
+length = 0.95
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [84, 85, 86, 87, 88, 89, 90, 91, 92, 93]
+}
+
+[sub_resource type="Animation" id="Animation_a1iw3"]
+resource_name = "idle"
+length = 0.35
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3]
+}
+
+[sub_resource type="Animation" id="Animation_1jmh4"]
+resource_name = "shoot"
+length = 1.15
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1, 1.1),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [36, 37, 38, 40, 41, 42, 43, 44, 45, 46, 47, 48]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.633333),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"shoot_fireball"
+}]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_mb0oh"]
+_data = {
+"RESET": SubResource("Animation_ef8ed"),
+"dead": SubResource("Animation_fapy7"),
+"idle": SubResource("Animation_a1iw3"),
+"shoot": SubResource("Animation_1jmh4")
+}
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7cbqo"]
+size = Vector2(19, 22)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_vr7s1"]
+radius = 176.045
+
+[node name="ranger" type="CharacterBody2D"]
+script = ExtResource("1_c5v25")
+fireball_scene = ExtResource("2_lalqf")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_fh3pn")
+position = Vector2(1, -3)
+scale = Vector2(1.4375, 1.5)
+texture = ExtResource("1_1hlow")
+hframes = 12
+vframes = 8
+frame = 36
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_mb0oh")
+}
+
+[node name="Hitbox" type="Area2D" parent="." groups=["Enemy"]]
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
+position = Vector2(1.5, -3)
+shape = SubResource("RectangleShape2D_7cbqo")
+debug_color = Color(0.335935, 0.618443, 0.197648, 0.42)
+
+[node name="Monitoring" type="Area2D" parent="."]
+
+[node name="Range" type="CollisionShape2D" parent="Monitoring"]
+shape = SubResource("CircleShape2D_vr7s1")
+
+[connection signal="area_entered" from="Hitbox" to="." method="_on_hitbox_area_entered"]
+[connection signal="body_entered" from="Monitoring" to="." method="_on_monitoring_body_entered"]
+[connection signal="body_exited" from="Monitoring" to="." method="_on_monitoring_body_exited"]

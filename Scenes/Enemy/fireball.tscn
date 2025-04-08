@@ -1,0 +1,38 @@
+[gd_scene load_steps=5 format=3 uid="uid://dspn3exbyhjo1"]
+
+[ext_resource type="Script" path="res://Scripts/Enemy/fireball.gd" id="1_gw4x4"]
+[ext_resource type="Texture2D" uid="uid://cbt8bdh3vus2s" path="res://Assets/enemies/mage/Human Mage/4_Ancient/ChatGPT Image Apr 6, 2025, 06_48_04 PM.png" id="1_h4ci7"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_pw880"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_h4ci7")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [],
+"loop": true,
+"name": &"new_animation",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_kgu8g"]
+size = Vector2(23, 9.625)
+
+[node name="fireball" type="Area2D"]
+collision_layer = 32
+collision_mask = 5
+script = ExtResource("1_gw4x4")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(-4, -0.999999)
+scale = Vector2(0.0424194, 0.0266113)
+sprite_frames = SubResource("SpriteFrames_pw880")
+frame_progress = 0.893636
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-1.5, -0.1875)
+shape = SubResource("RectangleShape2D_kgu8g")

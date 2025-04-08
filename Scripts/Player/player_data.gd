@@ -2,46 +2,39 @@ extends Node
 class_name Player_data
 
 static var SavePos: Vector2 = Vector2.ZERO
-static var health: int = 4
+static var health: float = 4.0
+static var max_health: float = 8.0 
 static var Playerspeed: int = 100
 static var score: int = 0
 static var coin: int = 0
 
-# Update the player's position (used in some game mechanics)
 func UpdatePos(value: Vector2):
 	SavePos += value
 
-# Save player data to Firebase
 func save_to_firebase():
 	var data = {
 		"score": score,
 		"coin": coin,
 		"health": health,
-		"SavePos": SavePos
+		"SavePos": "%f,%f" % [SavePos.x, SavePos.y]
 	}
-	var url = "player_data.json"
-	Firebase.put_data(url, data)
+	FireBase.put_data("player_data.json", data)
 
-# Load player data from Firebase
 func load_from_firebase():
-	var url = "player_data.json"
-	Firebase.request_data(url, Callable(self, "_on_data_received"))
+	FireBase.request_data("player_data.json", Callable(self, "_on_data_received"))
 
-# Callback for handling data when it is received from Firebase
-func _on_data_received(result, response_code, data):
-	if response_code == 200:
-		if data:
-			score = data.get("score", 0)
-			coin = data.get("coin", 0)
-			health = data.get("health", 4)
-			SavePos = data.get("SavePos", Vector2.ZERO)
-		else:
-			print("⚠️ No data found in Firebase, starting fresh.")
-			SavePos = Vector2(100, 200)  # Default position if no save exists
+func _on_data_received(body):
+	var data = JSON.parse_string(body.get_string_from_utf8())
+	if data:
+		score = data.get("score", 0)
+		coin = data.get("coin", 0)
+		health = data.get("health", 4)
+		if "SavePos" in data:
+			var pos = data["SavePos"].split(",")
+			SavePos = Vector2(float(pos[0]), float(pos[1]))
 	else:
-		print("❌ Failed to load data. Error:", response_code)
+		print("⚠️ No data found in Firebase, starting fresh.")
+		SavePos = Vector2(100, 200)
 
-# Delete the game data from Firebase
 func delete_game():
-	var url = "player_data.json"
-	Firebase.delete_data(url)
+	FireBase.delete_data("player_data.json")

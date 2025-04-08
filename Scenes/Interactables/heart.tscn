@@ -1,0 +1,21 @@
+[gd_scene load_steps=4 format=3 uid="uid://ckhecirg1y2tf"]
+
+[ext_resource type="Script" path="res://Scripts/Interactables/heart.gd" id="1_5poav"]
+[ext_resource type="Texture2D" uid="uid://b1urylus4nqv5" path="res://Assets/sprites/HeartSpriteSheet.png" id="1_wabau"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_6t0ao"]
+radius = 8.0
+
+[node name="heart" type="Area2D"]
+script = ExtResource("1_5poav")
+health_amount = null
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_wabau")
+hframes = 5
+frame = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_6t0ao")
+
+[node name="anim" type="AnimationPlayer" parent="."]

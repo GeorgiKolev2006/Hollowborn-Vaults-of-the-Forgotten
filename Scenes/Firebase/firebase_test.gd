@@ -1,21 +1,16 @@
 extends Node
 
-@onready var http_request : HTTPRequest = $HTTPRequest  # Ensure this path is correct
+var http_request : HTTPRequest
+var callback = null
 
-var callback : Callable
-
-# Initialize HTTPRequest node and connect the signal
 func _ready():
-	if http_request:
-		# Connect the request_completed signal to the _on_request_completed method
-		http_request.connect("request_completed", Callable(self, "_on_request_completed"))
-	else:
-		push_error("HTTPRequest node not found in the scene.")
+	http_request = HTTPRequest.new()
+	add_child(http_request)
+	http_request.request_completed.connect(_on_request_completed)
 
-# ✅ Function to request data from Firebase
-func request_data(path, callback_method):
+func request_data(path: String, callback_method: Callable):
 	if not http_request:
-		push_error("HTTPRequest node is null.")
+		push_error("HTTPRequest node is not ready.")
 		return
 	
 	var url = "https://hollowborn-b4a1c-default-rtdb.europe-west1.firebasedatabase.app/" + path + ".json"
@@ -23,14 +18,30 @@ func request_data(path, callback_method):
 	if error != OK:
 		push_error("Failed to request data from Firebase.")
 	else:
-		# Store the callback method as a callable to be used when the request is completed
 		callback = callback_method
 
-# ✅ Callback for when HTTPRequest is completed
+func put_data(path: String, data: Dictionary):
+	if not http_request:
+		push_error("HTTPRequest node is not ready.")
+		return
+	
+	var url = "https://hollowborn-b4a1c-default-rtdb.europe-west1.firebasedatabase.app/" + path + ".json"
+	var headers = ["Content-Type: application/json"]
+	var body = JSON.stringify(data)
+	var error = http_request.request(url, headers, HTTPClient.METHOD_PUT, body)
+	if error != OK:
+		push_error("Failed to put data to Firebase.")
+
+func delete_data(path: String):
+	if not http_request:
+		push_error("HTTPRequest node is not ready.")
+		return
+	
+	var url = "https://hollowborn-b4a1c-default-rtdb.europe-west1.firebasedatabase.app/" + path + ".json"
+	var error = http_request.request(url, [], HTTPClient.METHOD_DELETE)
+	if error != OK:
+		push_error("Failed to delete data from Firebase.")
+
 func _on_request_completed(result, response_code, headers, body):
-	if response_code == 200:
-		# Call the stored callback method with the response data
-		if callback:
-			callback.call(body)
-	else:
-		push_error("Failed to load data from Firebase. Response code: " + str(response_code))
+	if callback:
+		callback.call(body)

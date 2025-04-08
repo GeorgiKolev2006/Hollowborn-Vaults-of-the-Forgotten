@@ -124,8 +124,6 @@ _data = {
 }
 
 [node name="crate" type="StaticBody2D"]
-collision_layer = 16
-collision_mask = 2
 script = ExtResource("1_4s256")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
