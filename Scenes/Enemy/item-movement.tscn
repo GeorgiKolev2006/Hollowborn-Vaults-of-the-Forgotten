@@ -1,0 +1,29 @@
+[gd_scene load_steps=5 format=3 uid="uid://c3dup8ogjc6mj"]
+
+[ext_resource type="Texture2D" uid="uid://c5v3kitapkyft" path="res://Assets/ChatGPT Image Apr 19, 2025, 04_06_38 PM.png" id="1_krv5k"]
+[ext_resource type="Script" path="res://Scripts/Interactables/item_movement.gd" id="1_uh6y6"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_5ewnm"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_krv5k")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_kvwya"]
+radius = 20.0
+
+[node name="item-movement" type="Area2D"]
+script = ExtResource("1_uh6y6")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+scale = Vector2(0.0629883, 0.065918)
+sprite_frames = SubResource("SpriteFrames_5ewnm")
+animation = &"idle"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_kvwya")

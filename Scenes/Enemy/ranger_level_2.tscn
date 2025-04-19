@@ -1,0 +1,15 @@
+[gd_scene format=3 uid="uid://bkwr4ovdmb17u"]
+
+[node name="ranger level 2" type="CharacterBody2D"]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+
+[node name="Hitbox" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
+
+[node name="Monitoring" type="Area2D" parent="."]
+
+[node name="Range" type="CollisionShape2D" parent="Monitoring"]

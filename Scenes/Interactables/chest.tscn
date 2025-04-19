@@ -1,20 +1,93 @@
-[gd_scene load_steps=3 format=3 uid="uid://xpbt5q4mhnjq"]
+[gd_scene load_steps=12 format=3 uid="uid://xpbt5q4mhnjq"]
 
 [ext_resource type="Script" path="res://Scripts/Interactables/chest.gd" id="1_5guky"]
-[ext_resource type="Texture2D" uid="uid://qpxyf53kdd3y" path="res://Assets/chest/15_Ready_to_use_Treasure_Chests_Spritesheet.png" id="2_y7xvl"]
+[ext_resource type="Texture2D" uid="uid://dnyn2iyfohd82" path="res://Assets/tiles/Dungeon tileset/Dungeon Tileset V1/Multiple props/Interactable/chest_red_open_010.png" id="2_x868f"]
+[ext_resource type="Texture2D" uid="uid://v2lewnt2i3fh" path="res://Assets/tiles/Dungeon tileset/Dungeon Tileset V1/Multiple props/Interactable/chest_bulby_001.png" id="3_0wx5s"]
+[ext_resource type="Texture2D" uid="uid://c58aa2a6vgtrb" path="res://Assets/tiles/Dungeon tileset/Dungeon Tileset V1/Multiple props/Interactable/chest_red_open_004.png" id="4_3tobe"]
+[ext_resource type="Texture2D" uid="uid://ciu0wiw2bd6lf" path="res://Assets/tiles/Dungeon tileset/Dungeon Tileset V1/Multiple props/Interactable/chest_red_open_005.png" id="5_t6jsb"]
+[ext_resource type="Texture2D" uid="uid://75q8vggka3g8" path="res://Assets/tiles/Dungeon tileset/Dungeon Tileset V1/Multiple props/Interactable/chest_red_open_006.png" id="6_rnrkn"]
+[ext_resource type="Texture2D" uid="uid://cycitvt5d17yl" path="res://Assets/sprites/coin3_16x16.png" id="7_4k7x4"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_m8ual"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_x868f")
+}],
+"loop": true,
+"name": &"idle-opened",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_0wx5s")
+}],
+"loop": true,
+"name": &"idle-unopened",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_0wx5s")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_3tobe")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_t6jsb")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_rnrkn")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_x868f")
+}],
+"loop": true,
+"name": &"opening",
+"speed": 6.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ux0ln"]
+size = Vector2(28, 13)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_v21uv"]
+size = Vector2(32, 23)
+
+[sub_resource type="LabelSettings" id="LabelSettings_j41yo"]
+font_size = 17
+font_color = Color(0, 0, 0, 1)
+outline_size = 2
+outline_color = Color(1, 1, 0.176471, 1)
 
 [node name="chest" type="StaticBody2D"]
 script = ExtResource("1_5guky")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
-texture = ExtResource("2_y7xvl")
-hframes = 21
-vframes = 12
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_m8ual")
+animation = &"opening"
+frame_progress = 0.668298
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-
-[node name="anim" type="AnimationPlayer" parent="."]
+position = Vector2(0, 2.5)
+shape = SubResource("RectangleShape2D_ux0ln")
 
 [node name="hitbox" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="hitbox"]
+position = Vector2(0, -0.5)
+shape = SubResource("RectangleShape2D_v21uv")
+debug_color = Color(0.949038, 0.136034, 0.458233, 0.42)
+
+[node name="Label" type="Label" parent="."]
+offset_left = -13.0
+offset_top = -37.0
+offset_right = 28.0
+offset_bottom = -10.0
+text = "5"
+label_settings = SubResource("LabelSettings_j41yo")
+
+[node name="TextureRect" type="Sprite2D" parent="."]
+position = Vector2(5, -24)
+scale = Vector2(1.0625, 1.125)
+texture = ExtResource("7_4k7x4")
+hframes = 14
