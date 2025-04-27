@@ -57,6 +57,8 @@ animations = [{
 size = Vector2(36, 16)
 
 [node name="bullet" type="Area2D"]
+collision_layer = 32
+collision_mask = 5
 script = ExtResource("1_gykeq")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
@@ -66,5 +68,7 @@ autoplay = "default"
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(28, -12)
 shape = SubResource("RectangleShape2D_bj4sh")
+
+[node name="Timer" type="Timer" parent="."]
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]

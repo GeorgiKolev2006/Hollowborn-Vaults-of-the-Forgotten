@@ -8,35 +8,40 @@ enum enemy_states {MOVERIGHT, MOVELEFT, MOVEUP, MOVEDOWN, DEAD, CHASE, AVOIDING}
 @onready var coin_loot = preload("res://Scenes/Interactables/coin.tscn")
 @onready var hitbox_area = $EnemyHitbox
 @onready var attack_area = $EnemyAttack
-@onready var player = get_tree().get_root().get_node("Player")
-@onready var navigation = get_parent().get_node("Navigation2D")
 @onready var stuck_timer = $StuckTimer
 @export var detection_radius = 200.0
 @export var speed = 30
 @export var health = 3
+
 var can_take_damage = true
 var damage_cooldown = 0.2
 var dir = Vector2.ZERO
-var stuck_duration = 0.5  # Reduced time in seconds to detect stuck state
+var stuck_duration = 0.5
 var last_position = Vector2.ZERO
+var player = null
+var navigation = null
 
 func _ready() -> void:
+	player = get_tree().get_root().find_child("Player", true, false)
+	navigation = get_tree().get_root().find_child("Navigation2D", true, false)
+
 	random_generation()
 	stuck_timer.wait_time = stuck_duration
 	stuck_timer.one_shot = true
-	stuck_timer.connect("timeout", Callable(self, "_on_stuck_timeout"))
+	if not stuck_timer.is_connected("timeout", Callable(self, "_on_stuck_timeout")):
+		stuck_timer.connect("timeout", Callable(self, "_on_stuck_timeout"))
 
 func _physics_process(delta):
 	if health <= 0:
 		current_states = enemy_states.DEAD
-	if player and $EnemyHitbox.overlaps_body(player):
+
+	if player and hitbox_area.overlaps_body(player):
 		velocity = Vector2.ZERO
 	else:
 		if player and (global_position.distance_to(player.global_position) <= detection_radius):
 			current_states = enemy_states.CHASE
-		else:
-			if current_states == enemy_states.CHASE:
-				random_generation()
+		elif current_states == enemy_states.CHASE:
+			random_generation()
 
 	match current_states:
 		enemy_states.MOVERIGHT:
@@ -56,12 +61,11 @@ func _physics_process(delta):
 
 	if global_position.distance_to(last_position) < 5:
 		if stuck_timer.is_stopped():
-			stuck_timer.start(stuck_duration)
-			print("Enemy stuck, starting timer")  # Debug information
+			stuck_timer.start()
 	else:
 		stuck_timer.stop()
-	last_position = global_position
 
+	last_position = global_position
 	move_and_slide()
 
 func random_generation():
@@ -70,14 +74,10 @@ func random_generation():
 
 func random_direction():
 	match dir:
-		0:
-			current_states = enemy_states.MOVERIGHT
-		1:
-			current_states = enemy_states.MOVELEFT
-		2:
-			current_states = enemy_states.MOVEUP
-		3:
-			current_states = enemy_states.MOVEDOWN
+		0: current_states = enemy_states.MOVERIGHT
+		1: current_states = enemy_states.MOVELEFT
+		2: current_states = enemy_states.MOVEUP
+		3: current_states = enemy_states.MOVEDOWN
 
 func move_right():
 	velocity = Vector2.RIGHT * speed
@@ -113,11 +113,10 @@ func chase_player():
 func avoid_obstacles():
 	dir = Vector2.UP if randi() % 2 == 0 else Vector2.DOWN
 	velocity = dir * speed
-	print("Avoiding obstacle")  # Debug information
 
 func _on_stuck_timeout():
 	current_states = enemy_states.AVOIDING
-	print("Switching to AVOIDING state") 
+
 func dead():
 	dead_animation()
 	queue_free()
@@ -138,6 +137,6 @@ func loot_coin():
 
 func apply_knockback(force: Vector2):
 	velocity += force * 3
-	move_and_slide()  # Immediately apply movement
+	move_and_slide()
 	await get_tree().create_timer(0.3).timeout
 	velocity = Vector2.ZERO

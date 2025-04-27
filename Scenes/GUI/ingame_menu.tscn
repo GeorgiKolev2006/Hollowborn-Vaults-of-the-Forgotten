@@ -1,0 +1,68 @@
+[gd_scene load_steps=3 format=3 uid="uid://d20cyngyoxd51"]
+
+[ext_resource type="Texture2D" uid="uid://dwkjro7xwe0rc" path="res://Assets/Icons/gear-icon-2048x2048-5lk2g86a.png" id="1_erjwl"]
+[ext_resource type="Script" path="res://Scripts/GUI/ingame_menu.gd" id="1_vwtk4"]
+
+[node name="IngameMenu" type="CanvasLayer"]
+script = ExtResource("1_vwtk4")
+
+[node name="Panel" type="Panel" parent="."]
+offset_left = 265.0
+offset_top = 134.0
+offset_right = 857.0
+offset_bottom = 511.0
+
+[node name="Gear-icon-2048x2048-5Lk2g86a" type="Sprite2D" parent="Panel"]
+position = Vector2(95, 315)
+scale = Vector2(0.0661316, 0.0474453)
+texture = ExtResource("1_erjwl")
+
+[node name="Gear-icon-2048x2048-5Lk2g86a2" type="Sprite2D" parent="Panel/Gear-icon-2048x2048-5Lk2g86a"]
+position = Vector2(1065.63, -1697.16)
+scale = Vector2(1.26016, 1.2338)
+texture = ExtResource("1_erjwl")
+
+[node name="Gear-icon-2048x2048-5Lk2g86a3" type="Sprite2D" parent="Panel/Gear-icon-2048x2048-5Lk2g86a/Gear-icon-2048x2048-5Lk2g86a2"]
+position = Vector2(-1162.74, -797.824)
+scale = Vector2(0.535485, 0.604494)
+texture = ExtResource("1_erjwl")
+
+[node name="Save" type="Button" parent="Panel"]
+layout_mode = 0
+offset_left = 330.0
+offset_top = 150.0
+offset_right = 547.0
+offset_bottom = 196.0
+text = "Save"
+
+[node name="Quit" type="Button" parent="Panel"]
+layout_mode = 2
+offset_left = 396.0
+offset_top = 314.0
+offset_right = 551.0
+offset_bottom = 360.0
+text = "Quit"
+
+[node name="MainMenu" type="Button" parent="Panel"]
+layout_mode = 2
+offset_left = 363.0
+offset_top = 259.0
+offset_right = 549.0
+offset_bottom = 305.0
+text = "Main Menu"
+
+[node name="Resume" type="Button" parent="Panel"]
+layout_mode = 2
+offset_left = 315.0
+offset_top = 91.0
+offset_right = 547.0
+offset_bottom = 139.0
+text = "Resume"
+
+[node name="LastSave" type="Button" parent="Panel"]
+layout_mode = 2
+offset_left = 350.0
+offset_top = 204.0
+offset_right = 549.0
+offset_bottom = 250.0
+text = "Last Save"

@@ -8,8 +8,12 @@ var player: Node2D = null
 var is_shooting := false
 
 func _ready():
-	$Monitoring.connect("body_entered", Callable(self, "_on_monitoring_body_entered"))
-	$Monitoring.connect("body_exited", Callable(self, "_on_monitoring_body_exited"))
+	if not $Monitoring.is_connected("body_entered", Callable(self, "_on_monitoring_body_entered")):
+		$Monitoring.connect("body_entered", Callable(self, "_on_monitoring_body_entered"))
+
+	if not $Monitoring.is_connected("body_exited", Callable(self, "_on_monitoring_body_exited")):
+		$Monitoring.connect("body_exited", Callable(self, "_on_monitoring_body_exited"))
+
 	$AnimationPlayer.play("idle")
 
 func _on_monitoring_body_entered(body):
@@ -39,7 +43,6 @@ func shoot_loop():
 	if health > 0:
 		$AnimationPlayer.play("idle")
 
-# Add a Call Method Track to "shoot" animation that calls this at the right frame
 func shoot_fireball():
 	if not player or not is_instance_valid(player):
 		return
@@ -54,7 +57,6 @@ func take_damage(_vel: Vector2):
 	flash()
 	if health <= 0:
 		die()
-
 
 func die():
 	$AnimationPlayer.play("dead")

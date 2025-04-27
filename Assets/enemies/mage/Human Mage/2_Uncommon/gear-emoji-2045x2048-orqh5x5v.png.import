@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c3uvb80x6h4b6"
-path="res://.godot/imported/COUPON.png-43a61f154e280879ac92ad21fa73f254.ctex"
+uid="uid://c8j78l2oqjf4d"
+path="res://.godot/imported/gear-emoji-2045x2048-orqh5x5v.png-5f69faa7678d544d0dccc4e3637b0d48.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/COUPON.png"
-dest_files=["res://.godot/imported/COUPON.png-43a61f154e280879ac92ad21fa73f254.ctex"]
+source_file="res://Assets/enemies/mage/Human Mage/2_Uncommon/gear-emoji-2045x2048-orqh5x5v.png"
+dest_files=["res://.godot/imported/gear-emoji-2045x2048-orqh5x5v.png-5f69faa7678d544d0dccc4e3637b0d48.ctex"]
 
 [params]
 

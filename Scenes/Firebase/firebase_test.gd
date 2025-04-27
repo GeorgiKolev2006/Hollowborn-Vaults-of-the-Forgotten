@@ -1,7 +1,8 @@
 extends Node
 
-var http_request : HTTPRequest
+var http_request: HTTPRequest
 var callback = null
+var firebase_enabled: bool = true  # 🔥 Added this
 
 func _ready():
 	http_request = HTTPRequest.new()
@@ -9,6 +10,9 @@ func _ready():
 	http_request.request_completed.connect(_on_request_completed)
 
 func request_data(path: String, callback_method: Callable):
+	if not firebase_enabled:
+		print("🚫 Firebase request blocked: request_data")
+		return
 	if not http_request:
 		push_error("HTTPRequest node is not ready.")
 		return
@@ -21,6 +25,9 @@ func request_data(path: String, callback_method: Callable):
 		callback = callback_method
 
 func put_data(path: String, data: Dictionary):
+	if not firebase_enabled:
+		print("🚫 Firebase request blocked: put_data")
+		return
 	if not http_request:
 		push_error("HTTPRequest node is not ready.")
 		return
@@ -33,6 +40,9 @@ func put_data(path: String, data: Dictionary):
 		push_error("Failed to put data to Firebase.")
 
 func delete_data(path: String):
+	if not firebase_enabled:
+		print("🚫 Firebase request blocked: delete_data")
+		return
 	if not http_request:
 		push_error("HTTPRequest node is not ready.")
 		return

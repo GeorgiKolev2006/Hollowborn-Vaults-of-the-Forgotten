@@ -1,22 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://ckpyf8no558l2"]
+[gd_scene load_steps=7 format=3 uid="uid://ckpyf8no558l2"]
 
 [ext_resource type="Texture2D" uid="uid://cki6u0vynoe8m" path="res://Assets/ChatGPT Image Apr 19, 2025, 02_46_02 PM.png" id="1_4h476"]
+[ext_resource type="Script" path="res://Scripts/Enemy/snake_bullet.gd" id="1_gnv5i"]
 
-[sub_resource type="Animation" id="Animation_wqbbx"]
-resource_name = "shooting"
-length = 0.7
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.3, 0.6),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 1,
-"values": [0, 1, 2]
-}
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_weclx"]
+size = Vector2(16, 8)
 
 [sub_resource type="Animation" id="Animation_3a2vr"]
 length = 0.001
@@ -33,19 +21,38 @@ tracks/0/keys = {
 "values": [0]
 }
 
+[sub_resource type="Animation" id="Animation_wqbbx"]
+resource_name = "shooting"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [0, 1, 2]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_vxt1g"]
 _data = {
 "RESET": SubResource("Animation_3a2vr"),
 "shooting": SubResource("Animation_wqbbx")
 }
 
-[node name="Area2D" type="Area2D"]
+[node name="snake-bullet" type="Area2D"]
+collision_layer = 32
+collision_mask = 5
+script = ExtResource("1_gnv5i")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_weclx")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-position = Vector2(-1, -2)
-scale = Vector2(0.220622, 0.174805)
+position = Vector2(3.8147e-06, -7.62939e-06)
+scale = Vector2(0.0399985, 0.0308342)
 texture = ExtResource("1_4h476")
 hframes = 3
 
@@ -54,3 +61,5 @@ libraries = {
 "": SubResource("AnimationLibrary_vxt1g")
 }
 autoplay = "shooting"
+
+[node name="Timer" type="Timer" parent="."]

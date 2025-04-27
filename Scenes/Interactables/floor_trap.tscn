@@ -1,6 +1,6 @@
 [gd_scene load_steps=9 format=3 uid="uid://cxy5v6211u4m5"]
 
-[ext_resource type="Script" path="res://spike_trap.gd" id="1_dpmx6"]
+[ext_resource type="Script" path="res://Scripts/Interactables/spike_trap.gd" id="1_dpmx6"]
 [ext_resource type="Texture2D" uid="uid://dkbicbfuj85s6" path="res://Assets/spike_0.png" id="2_4wlop"]
 [ext_resource type="Texture2D" uid="uid://hgrjvxuegg7a" path="res://Assets/spike_1.png" id="3_tf5uk"]
 [ext_resource type="Texture2D" uid="uid://87xoh8tcq5dp" path="res://Assets/spike_2.png" id="4_jx0ji"]

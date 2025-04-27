@@ -9,8 +9,15 @@ func _ready():
 	current_state.enter()
  
 func change_state(state):
-	current_state = find_child(state) as State
-	current_state.enter()
- 
-	previous_state.exit()
+	var new_state = find_child(state) as State
+
+	if new_state == null:
+		print("⚠️ State", state, "not found in FSM")
+		return
+
+	if current_state:
+		current_state.exit()
+
 	previous_state = current_state
+	current_state = new_state
+	current_state.enter()
